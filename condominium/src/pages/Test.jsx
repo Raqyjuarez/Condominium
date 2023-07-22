@@ -4,9 +4,11 @@ import { Button } from "@mui/material";
 
 export default function Test({ page }) {
   return (
-    <Box>
+    <Box sx={{ height: "100vh" }}>
       <Typography variant="h4">{page}</Typography>
-      <Button variant='contained' color="primary">Prueba</Button>
+      <Button variant="contained" color="primary">
+        Prueba
+      </Button>
     </Box>
   );
 }
