@@ -7,7 +7,11 @@ export default function MyRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Test page="Pagina 1" />} />
-      <Route path="/Page2" element={<Test page="Pagina 2" />} />
+      <Route path="/Users" element={<Test page="Users Page" />} />
+      <Route path="/Residentials" element={<Test page="Residentials Page" />} />
+      <Route path="/Tickets" element={<Test page="Tickets Page" />} />
+      <Route path="/Maintenance" element={<Test page="Maintenance Page" />} />
+      <Route path="/Categories" element={<Test page="Categories Page" />} />
     </Routes>
   );
 }
