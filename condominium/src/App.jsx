@@ -1,19 +1,28 @@
-import { useState } from "react";
-import Box from "@mui/material/Box";
 import Sidebar from "./components/Sidebar";
 import MyRoutes from "./routers/routes";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./assets/Theme";
+import Box from "@mui/material/Box";
 
 function App() {
   return (
-    <Box sx={{ display: "flex" }}>
+    <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box
+          component="main"
+          sx={{
+            display: "flex",
+            alignSelf: "stretch",
+            flexDirection: "row",
+            gap: 4,
+          }}
+        >
           <Sidebar />
           <MyRoutes />
         </Box>
       </BrowserRouter>
-    </Box>
+    </ThemeProvider>
   );
 }
 
