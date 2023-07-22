@@ -8,8 +8,14 @@ import { useAction } from "../hooks/useAction";
 import AbcRoundedIcon from "@mui/icons-material/AbcRounded";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
+import { toggle } from '../features/states/drawerSlice'
+import { NavLink } from 'react-router-dom'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
-const toggle = { type: "toggle" };
 export default function Sidebar() {
   // const [drawerVisible, setDrawerVisible] = useState(true);
   const drawerWidth = {
@@ -20,40 +26,51 @@ export default function Sidebar() {
   const drawerState = useSelector((state) => state.drawer.value);
   const dispatch = useDispatch();
 
-  const handleDrawerState = useAction(toggle);
+  const handleDrawerState = () => {
+    console.log(drawerState)
+    dispatch(toggle());
+  }
 
   return (
-    <Stack
-      direction="column"
-      p={0}
+    <Box
+      sx={{flexDirection: 'column', padding: 0, justifyContent: 'center', width: drawerState ? drawerWidth.opened : drawerWidth.closed }}
       //width={drawerVisible == false ? drawerWidth.closed : drawerWidth.opened}
     >
       <DrawerHeader>
-        <IconButton color="primary" onClick={handleDrawerState}>
+        <IconButton color="primary" edge="start" onClick={() => handleDrawerState()} sx={{margin: 0}}>
           <MenuRoundedIcon fontSize="large" />
         </IconButton>
         <Typography
           className="test"
           variant="h5"
-          sx={{ fontWeight: 800, color: "#212121" }}
+          sx={{ fontWeight: 800, color: "#212121", display: drawerState ? 'block' : 'none' }}
         >
           CONDOMINIUM
         </Typography>
       </DrawerHeader>
-    </Stack>
+      <List>
+        {linksArray.map(({icon, label, to}) => (
+          <ListItem component={NavLink} key={label} to={to} sx={{display: 'block' }} disablePadding>
+            <ListItemButton sx={{minHeight: 48, px: 2.5}}>
+              <ListItemIcon>
+                {icon}
+              </ListItemIcon>
+              <ListItemText primary={label} sx={{ display : drawerState ? 'block' : 'none'}}/>
+            </ListItemButton>
+
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 }
 
-const DrawerHeader = styled("div")(({ drawerVisible }) => ({
+const DrawerHeader = styled("div")(({ drawerState }) => ({
   display: "flex",
   flexDirection: "row",
   padding: 4,
-  justifyContent: "center",
+  justifyContent: drawerState ? 'initial' : 'center',
   alignItems: "center",
-
-  ".test": {
-    color: drawerVisible ? "red" : "blue",
-  },
 }));
 
 const linksArray = [
