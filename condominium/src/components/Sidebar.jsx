@@ -15,6 +15,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Logo from '../assets/Logo.svg'
 
 export default function Sidebar() {
   // const [drawerVisible, setDrawerVisible] = useState(true);
@@ -33,17 +34,18 @@ export default function Sidebar() {
 
   return (
     <Box
-      sx={{flexDirection: 'column', padding: 0, justifyContent: 'center', width: drawerState ? drawerWidth.opened : drawerWidth.closed }}
+      sx={{flexDirection: 'column', padding: 1, justifyContent: 'center', width: drawerState ? drawerWidth.opened : drawerWidth.closed }}
       //width={drawerVisible == false ? drawerWidth.closed : drawerWidth.opened}
     >
       <DrawerHeader>
-        <IconButton color="primary" edge="start" onClick={() => handleDrawerState()} sx={{margin: 0}}>
-          <MenuRoundedIcon fontSize="large" />
+        <IconButton color="primary" edge="start" onClick={() => handleDrawerState()} sx={{margin: 0, padding: 0}}>
+          {/* <MenuRoundedIcon fontSize="large" /> */}
+          <img src={Logo} style={{height: 48, width: 48}}/>
         </IconButton>
-        <Typography
+        <Typography component={NavLink} to='/' 
           className="test"
           variant="h5"
-          sx={{ fontWeight: 800, color: "#212121", display: drawerState ? 'block' : 'none' }}
+          sx={{ fontWeight: 800, color: "#212121", textDecoration: 'none', display: drawerState ? 'block' : 'none', width: '184px', height: '29px' }}
         >
           CONDOMINIUM
         </Typography>

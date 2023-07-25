@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar";
 export default function MyRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Test page="Pagina 1" />} />
+      <Route path="/" element={<Test page="Home Page" />} />
       <Route path="/Users" element={<Test page="Users Page" />} />
       <Route path="/Residentials" element={<Test page="Residentials Page" />} />
       <Route path="/Tickets" element={<Test page="Tickets Page" />} />
