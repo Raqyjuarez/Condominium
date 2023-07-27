@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
@@ -21,7 +20,7 @@ export default function Test({ page }) {
   };
 
   return (
-    <Box
+    <Box 
       sx={{
         display: "flex",
         alignItems: "center",
@@ -37,11 +36,13 @@ export default function Test({ page }) {
         sx={{
           display: "flex",
           flexDirection: "column",
-          padding: 3,
+          padding: 4,
           gap: 2,
+          width: '75%',
+          borderRadius: '2%'
         }}
       >
-        <Typography variant="h4">Register</Typography>
+       
         {page.map((input) => (
           <TextField
             key={input.name}
