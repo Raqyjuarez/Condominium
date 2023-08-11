@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
@@ -12,16 +11,16 @@ export default function Test({ page }) {
     e.preventDefault();
   };
 
-  console.log(values);
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
     setValues({ ...values, [name]: value });
     console.log(name, value);
   };
+ 
 
   return (
-    <Box
+    <Box 
       sx={{
         display: "flex",
         alignItems: "center",
@@ -37,22 +36,20 @@ export default function Test({ page }) {
         sx={{
           display: "flex",
           flexDirection: "column",
-          padding: 3,
+          padding: 4,
           gap: 2,
+          width: '75%',
+          borderRadius: '2%'
         }}
       >
-        <Typography variant="h4">Register</Typography>
+       
         {page.map((input) => (
           <TextField
-            key={input.name}
-            name={input.name}
-            label={input.name}
-            placeholder={input.placeholder}
-            // value={values[input.name]}
+           {...input}
             onChange={handleInputChange}
           />
         ))}
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick = {handleSubmit}>
           Add
         </Button>
       </Paper>

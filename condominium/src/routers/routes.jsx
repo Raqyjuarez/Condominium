@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "../App";
+//import App from "../App";
 import Form from "../pages/Form";
-import Sidebar from "../components/Sidebar";
+//import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 import EnhancedTable from "../pages/EnhancedTable";
 
@@ -30,56 +30,186 @@ export default function MyRoutes() {
 const allInputs = {
   users: [
     {
-      name: "username",
+      key: "Name",
       type: "text",
-      placeholder: "Username",
-      errorMessage:
-        "Username should be 3-16 characters and shouldn't include any special character!",
+      placeholder: "Name",
+      error: true,
+      helperText:
+        "Name should be 3-16 characters and shouldn't include any special character!",
       required: true,
     },
     {
-      name: "email",
+      key: "Lastname",
+      type: "text",
+      placeholder: "Lastname",
+      errorMessage: "Lastname should be 3-16 characters and shouldn't include any special character!",
+      required: true,
+    },
+    {
+      key: "Email",
       type: "email",
       placeholder: "Email",
-      errorMessage: "It should be a valid email address!",
+      errorMessage: "The email must be valid",
       required: true,
     },
     {
-      name: "birthday",
-      type: "date",
-      placeholder: "Birthday",
-    },
-    {
-      name: "password",
-      type: "password",
-      placeholder: "Password",
+      key: "Phone",
+      type: "number",
+      placeholder: "Phone Number",
       errorMessage:
-        "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
+        "Only use numbers",
       required: true,
     },
     {
-      name: "confirmPassword",
-      type: "password",
-      placeholder: "Confirm Password",
-      errorMessage: "Passwords don't match!",
+      key: "User Role",
+      type: "text",
+      placeholder: "Add User Role",
+      errorMessage: "User Role must exist",
       required: true,
     },
   ],
   residentials: [
-    { id: 1, name: "residentials1" },
-    { id: 2, name: "residentials2" },
+    {
+      key: "Owner",
+      type: "text",
+      placeholder: "Owner",
+      errorMessage:
+        "Owner should be 3-16 characters and shouldn't include any special character!",
+      required: true,
+    },
+    {
+      key: "Resident",
+      type: "text",
+      placeholder: "Resident",
+      errorMessage: "Resident should be 3-16 characters and shouldn't include any special character!",
+      required: true,
+    },
+    {
+      key: "Address",
+      type: "text",
+      placeholder: "Address",
+      errorMessage: "Address should be 10-25 characters and shouldn't include any special character!",
+      required: true,
+    },
+
+    {
+      key: "Phone",
+      type: "number",
+      placeholder: "Phone Number",
+      errorMessage:
+        "Only use numbers",
+      required: true,
+      onChange: 'onInputChange'
+    },
   ],
   tickets: [
-    { id: 1, name: "tickets1" },
-    { id: 2, name: "tickets2" },
+    {
+      key: "ID",
+      type: "number",
+      placeholder: "ID",
+      errorMessage:
+        "Use only numbers!",
+      required: true,
+    },
+    {
+      key: "Title",
+      type: "text",
+      placeholder: "Title",
+      errorMessage: "Title should be 3-16 characters and shouldn't include any special character!",
+      required: true,
+    },
+    {
+      key: "User ID",
+      type: "text",
+      placeholder: "User ID",
+      errorMessage: "Address should be 10-25 characters and shouldn't include any special character!",
+      required: true,
+    },
+
+    {
+      key: "Category ID",
+      type: "number",
+      placeholder: "Category ID",
+      errorMessage:
+        "Only use numbers",
+      required: true,
+    },
+    {
+      key: "Priority",
+      type: "number",
+      placeholder: "Priority",
+      errorMessage:
+        "Only use numbers",
+      required: true,
+    },
+    {
+      key: "Maitenance ID",
+      type: "number",
+      placeholder: "Maitenance ID",
+      errorMessage:
+        "Only use numbers",
+      required: true,
+    },
+
+    {
+      key: "Description",
+      type: "text",
+      placeholder: "Description",
+      errorMessage:
+        "Use 250 words or more",
+      required: true,
+    },
+
   ],
   maintenance: [
-    { id: 1, name: "maintenance1" },
-    { id: 2, name: "maintenance2" },
+    {
+      key: "ID",
+      type: "number",
+      placeholder: "ID",
+      errorMessage:
+        "Use only numbers",
+      required: true,
+    },
+    {
+      key: "Maitenance",
+      type: "text",
+      placeholder: "Meitenance",
+      errorMessage: "Meitenance should be 3-16 characters and shouldn't include any special character!",
+      required: true,
+    },
+    {
+      key: "Ability ID",
+      type: "number",
+      placeholder: "Ability ID",
+      errorMessage: "Use only numbers",
+      required: true,
+    },
+
+    {
+      key: "Ability",
+      type: "text",
+      placeholder: "Ability",
+      errorMessage:
+        "Write the Ability needed without special characters",
+      required: true,
+    },
   ],
   categories: [
-    { id: 1, name: "categories1" },
-    { id: 2, name: "categories2" },
+    {
+      key: "ID",
+      type: "number",
+      placeholder: "ID",
+      errorMessage:
+        "Use only numbers",
+      required: true,
+    },
+    {
+      key: "Category",
+      type: "text",
+      placeholder: "Category",
+      errorMessage: "Category should be 3-10 characters and shouldn't include any special character!",
+      required: true,
+    },
   ],
 };
 
