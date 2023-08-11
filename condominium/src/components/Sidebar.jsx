@@ -34,7 +34,7 @@ export default function Sidebar() {
 
   return (
     <Box
-      sx={{flexDirection: 'column', padding: 1, justifyContent: 'center', width: drawerState ? drawerWidth.opened : drawerWidth.closed }}
+      sx={{flexDirection: 'column', padding: 1, justifyContent: 'center', bgcolor: '#FAFAFA', width: drawerState ? drawerWidth.opened : drawerWidth.closed }}
       //width={drawerVisible == false ? drawerWidth.closed : drawerWidth.opened}
     >
       <DrawerHeader>

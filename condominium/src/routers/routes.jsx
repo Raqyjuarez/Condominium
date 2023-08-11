@@ -3,6 +3,7 @@ import App from "../App";
 import Form from "../pages/Form";
 import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
+import EnhancedTable from "../pages/EnhancedTable";
 
 export default function MyRoutes() {
   return (
@@ -20,7 +21,7 @@ export default function MyRoutes() {
       />
       <Route
         path="/Categories"
-        element={<Form page={allInputs.categories} />}
+        element={<EnhancedTable Unit={tables.categories} />}
       />
     </Routes>
   );
@@ -80,4 +81,14 @@ const allInputs = {
     { id: 1, name: "categories1" },
     { id: 2, name: "categories2" },
   ],
+};
+
+const tables = {
+  categories: {
+    name: "Categories",
+    fields: [
+      { id: "id", headerName: "ID" },
+      { id: "category", headerName: "Category" },
+        ],
+  },
 };

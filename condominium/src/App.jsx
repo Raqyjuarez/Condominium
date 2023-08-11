@@ -16,6 +16,8 @@ function App() {
             alignSelf: "stretch",
             flexDirection: "row",
             gap: 4,
+            bgcolor: '#EDE7F6',
+            height: '100vh',            
           }}
         >
           <Sidebar />
