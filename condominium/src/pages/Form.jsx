@@ -11,13 +11,13 @@ export default function Test({ page }) {
     e.preventDefault();
   };
 
-  console.log(values);
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
     setValues({ ...values, [name]: value });
     console.log(name, value);
   };
+ 
 
   return (
     <Box 
@@ -45,15 +45,11 @@ export default function Test({ page }) {
        
         {page.map((input) => (
           <TextField
-            key={input.name}
-            name={input.name}
-            label={input.name}
-            placeholder={input.placeholder}
-            // value={values[input.name]}
+           {...input}
             onChange={handleInputChange}
           />
         ))}
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick = {handleSubmit}>
           Add
         </Button>
       </Paper>

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "../App";
+//import App from "../App";
 import Form from "../pages/Form";
-import Sidebar from "../components/Sidebar";
+//import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 
 export default function MyRoutes() {
@@ -29,29 +29,30 @@ export default function MyRoutes() {
 const allInputs = {
   users: [
     {
-      name: "Name",
-      type: "number",
+      key: "Name",
+      type: "text",
       placeholder: "Name",
-      errorMessage:
+      error: true,
+      helperText:
         "Name should be 3-16 characters and shouldn't include any special character!",
       required: true,
     },
     {
-      name: "Lastname",
+      key: "Lastname",
       type: "text",
       placeholder: "Lastname",
       errorMessage: "Lastname should be 3-16 characters and shouldn't include any special character!",
       required: true,
     },
     {
-      name: "Email",
+      key: "Email",
       type: "email",
       placeholder: "Email",
       errorMessage: "The email must be valid",
       required: true,
     },
     {
-      name: "Phone",
+      key: "Phone",
       type: "number",
       placeholder: "Phone Number",
       errorMessage:
@@ -59,7 +60,7 @@ const allInputs = {
       required: true,
     },
     {
-      name: "User Role",
+      key: "User Role",
       type: "text",
       placeholder: "Add User Role",
       errorMessage: "User Role must exist",
@@ -68,7 +69,7 @@ const allInputs = {
   ],
   residentials: [
     {
-      name: "Owner",
+      key: "Owner",
       type: "text",
       placeholder: "Owner",
       errorMessage:
@@ -76,14 +77,14 @@ const allInputs = {
       required: true,
     },
     {
-      name: "Resident",
+      key: "Resident",
       type: "text",
       placeholder: "Resident",
       errorMessage: "Resident should be 3-16 characters and shouldn't include any special character!",
       required: true,
     },
     {
-      name: "Address",
+      key: "Address",
       type: "text",
       placeholder: "Address",
       errorMessage: "Address should be 10-25 characters and shouldn't include any special character!",
@@ -91,17 +92,18 @@ const allInputs = {
     },
 
     {
-      name: "Phone",
+      key: "Phone",
       type: "number",
       placeholder: "Phone Number",
       errorMessage:
         "Only use numbers",
       required: true,
+      onChange: 'onInputChange'
     },
   ],
   tickets: [
     {
-      name: "ID",
+      key: "ID",
       type: "number",
       placeholder: "ID",
       errorMessage:
@@ -109,14 +111,14 @@ const allInputs = {
       required: true,
     },
     {
-      name: "Title",
+      key: "Title",
       type: "text",
       placeholder: "Title",
       errorMessage: "Title should be 3-16 characters and shouldn't include any special character!",
       required: true,
     },
     {
-      name: "User ID",
+      key: "User ID",
       type: "text",
       placeholder: "User ID",
       errorMessage: "Address should be 10-25 characters and shouldn't include any special character!",
@@ -124,7 +126,7 @@ const allInputs = {
     },
 
     {
-      name: "Category ID",
+      key: "Category ID",
       type: "number",
       placeholder: "Category ID",
       errorMessage:
@@ -132,7 +134,7 @@ const allInputs = {
       required: true,
     },
     {
-      name: "Priority",
+      key: "Priority",
       type: "number",
       placeholder: "Priority",
       errorMessage:
@@ -140,7 +142,7 @@ const allInputs = {
       required: true,
     },
     {
-      name: "Maitenance ID",
+      key: "Maitenance ID",
       type: "number",
       placeholder: "Maitenance ID",
       errorMessage:
@@ -149,7 +151,7 @@ const allInputs = {
     },
 
     {
-      name: "Description",
+      key: "Description",
       type: "text",
       placeholder: "Description",
       errorMessage:
@@ -160,7 +162,7 @@ const allInputs = {
   ],
   maintenance: [
     {
-      name: "ID",
+      key: "ID",
       type: "number",
       placeholder: "ID",
       errorMessage:
@@ -168,14 +170,14 @@ const allInputs = {
       required: true,
     },
     {
-      name: "Maitenance",
+      key: "Maitenance",
       type: "text",
       placeholder: "Meitenance",
       errorMessage: "Meitenance should be 3-16 characters and shouldn't include any special character!",
       required: true,
     },
     {
-      name: "Ability ID",
+      key: "Ability ID",
       type: "number",
       placeholder: "Ability ID",
       errorMessage: "Use only numbers",
@@ -183,7 +185,7 @@ const allInputs = {
     },
 
     {
-      name: "Ability",
+      key: "Ability",
       type: "text",
       placeholder: "Ability",
       errorMessage:
@@ -193,7 +195,7 @@ const allInputs = {
   ],
   categories: [
     {
-      name: "ID",
+      key: "ID",
       type: "number",
       placeholder: "ID",
       errorMessage:
@@ -201,7 +203,7 @@ const allInputs = {
       required: true,
     },
     {
-      name: "Category",
+      key: "Category",
       type: "text",
       placeholder: "Category",
       errorMessage: "Category should be 3-10 characters and shouldn't include any special character!",
