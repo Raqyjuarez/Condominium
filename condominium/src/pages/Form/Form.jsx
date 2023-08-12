@@ -11,14 +11,12 @@ export default function Test({ page }) {
     e.preventDefault();
   };
 
-
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
     setValues({ ...values, [name]: value });
     console.log(name, value);
   };
  
-
   return (
     <Box 
       sx={{
