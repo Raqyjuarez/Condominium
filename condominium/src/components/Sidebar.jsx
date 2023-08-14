@@ -16,6 +16,10 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Logo from '../assets/Logo.svg'
+import Button from '@mui/material/Button';
+import {auth} from '../config/Auth-firebase';
+import { signOut } from 'firebase/auth';
+import{useNavigate} from 'react-router-dom';
 
 export default function Sidebar() {
   // const [drawerVisible, setDrawerVisible] = useState(true);
@@ -31,6 +35,13 @@ export default function Sidebar() {
     console.log(drawerState)
     dispatch(toggle());
   }
+
+  const navigate = useNavigate(); 
+
+    const logOut =async  () => {
+        await signOut(auth);
+        navigate('/login');
+    }
 
   return (
     <Box
@@ -63,6 +74,15 @@ export default function Sidebar() {
           </ListItem>
         ))}
       </List>
+      <Button
+            type="button" 
+            onClick={logOut}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 2, mb: 2 }}
+          >
+            Log Out
+          </Button>
     </Box>
   );
 }
