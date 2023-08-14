@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Form from "../pages/Form/Form";
 //import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 import EnhancedTable from "../pages/EnhancedTable";
 import getFields from "../pages/Form/getFields";
 import { useSelector } from 'react-redux'
@@ -14,6 +15,7 @@ export default function MyRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/Users" element={<Form page={Inputs.users} />} />
       <Route
         path="/Residentials"
