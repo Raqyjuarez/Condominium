@@ -1,8 +1,20 @@
 import React,{useState} from 'react'
-import { signInWithEmailAndPassword} from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail} from 'firebase/auth';
 import {auth} from '../config/Auth-firebase';
 import{useNavigate} from 'react-router-dom';
-import { Button, TextField, Container, Paper, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+
 
 
 export default function Login() {
@@ -24,20 +36,38 @@ export default function Login() {
         }
     }
 
-  return (
-    <Container maxWidth="xs" sx={{display: 'flex', alignItems:'center'}}>
-      <Paper elevation={5} style={{ padding: '20px' }}>
-        <Typography 
-          className="test"
-          variant="h5"
-          sx={{ fontWeight: 800, color: "#212121", textDecoration: 'none',
+    const resetPass = async () =>{
+      try{
+        await sendPasswordResetEmail(auth, email);
+        console.log('Correo electrónico de recuperación de contraseña enviado');
+    } catch (error) {
+      alert("Antes de darle click en el boton, ingrese su correo.")
+      console.log(error.message);
+    }
+    }
+
+  
+
+return (
+  
+    <Container component="main" maxWidth="xs" sx={{display: 'flex', alignItems:'center'}}>
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
           display: 'flex',
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          height: '100%', 
-         }}>Iniciar sesión</Typography>
-        <form >
-          <TextField
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box component="form"  noValidate sx={{ mt: 1 }}>
+        <TextField
             label="Correo electrónico"
             variant="outlined"
             fullWidth
@@ -54,12 +84,30 @@ export default function Login() {
           value={pass}
           onChange={(e) => setPass(e.target.value)}
         />
-        <Button variant="contained" color="primary" fullWidth type="button" onClick={logIn}>
-          Iniciar sesión
-        </Button>
-      </form>
-    </Paper>
-  </Container>
-  )
+          
+          <Button
+            type="button" 
+            onClick={logIn}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          
+          <Link
+            component="button"
+            variant="body2"
+            onClick={resetPass}
+            sx={{ mt: 1, mb: 2, textDecoration: 'underline', cursor: 'pointer' }}
+>
+              Olvidó la contraseña?
+          </Link>
+          
+        </Box>
+      </Box>
+      
+    </Container>
+  
+);
 }
-
