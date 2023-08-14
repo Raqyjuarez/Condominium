@@ -14,7 +14,7 @@ export default function MyRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/Users" element={<Form page={Inputs.users} />} />
       <Route

@@ -26,8 +26,16 @@ export default function Login() {
 
   return (
     <Container maxWidth="xs">
-      <Paper elevation={3} style={{ padding: '20px' }}>
-        <Typography variant="h5">Iniciar sesión</Typography>
+      <Paper elevation={5} style={{ padding: '20px' }}>
+        <Typography 
+          className="test"
+          variant="h5"
+          sx={{ fontWeight: 800, color: "#212121", textDecoration: 'none',
+          display: 'flex',
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          height: '100%', 
+         }}>Iniciar sesión</Typography>
         <form >
           <TextField
             label="Correo electrónico"
