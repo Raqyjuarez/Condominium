@@ -25,7 +25,7 @@ export default function Login() {
     }
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth="xs" sx={{display: 'flex', alignItems:'center'}}>
       <Paper elevation={5} style={{ padding: '20px' }}>
         <Typography 
           className="test"
