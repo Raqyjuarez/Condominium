@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import drawerSlice from "../features/states/drawerSlice";
+import drawerSlice from "./drawerSlice";
 import formSlice from "./formSlice";
 
 export const store = configureStore({

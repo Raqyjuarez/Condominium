@@ -1,28 +1,28 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //import App from "../App";
-import Form from "../pages/Form/Form";
+import Form from "../pages/Form";
+import Forms from "../pages/Forms";
 //import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 import EnhancedTable from "../pages/EnhancedTable";
-import getFields from "../pages/Form/getFields";
 import { useSelector } from 'react-redux'
 
 export default function MyRoutes() {
-  const Inputs = useSelector((state) => state.form)
+  const Inputs = useSelector((state) => state.form.initialInputs)
 
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/Users" element={<Form page={Inputs.users} />} />
+      <Route path="/Users" element={<Forms />} />
       <Route
         path="/Residentials"
-        element={<Form page={Inputs.residentials} />}
+        element={<Form data={Inputs.residentials} />}
       />
-      <Route path="/Tickets" element={<Form page={Inputs.tickets} />} />
+      <Route path="/Tickets" element={<Form data={Inputs.tickets} />} />
       <Route
         path="/Maintenance"
-        element={<Form page={Inputs.maintenance} />}
+        element={<Form data={Inputs.maintenance} />}
       />
       <Route
         path="/Categories"
