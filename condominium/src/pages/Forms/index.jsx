@@ -1,5 +1,5 @@
+import { Box, Paper } from "@mui/material";
 import UsersForm from "./UsersForm";
-import { Box, Paper, Button } from "@mui/material";
 
 const Forms = () => {
   return (
@@ -21,13 +21,10 @@ const Forms = () => {
           padding: 4,
           gap: 2,
           width: "75%",
-          borderRadius: "2%",
+          borderRadius: 2,
         }}
       >
         <UsersForm />
-        <Button variant="contained" size="large">
-          Add
-        </Button>
       </Paper>
     </Box>
   );

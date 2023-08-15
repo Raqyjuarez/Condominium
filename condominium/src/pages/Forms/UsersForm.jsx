@@ -1,21 +1,16 @@
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
 
 const UsersForm = () => {
-  const valid = {
-    users: {
-      Name: true,
-      Lastname: true,
-      Email: true,
-      UserPhone: true,
-      UserRole: true,
-    },
-  };
+
+    const valid = useSelector((state) => state.form.valid);
+    const dispatch = useDispatch();
 
   return (
     <>
       <TextField
         key="Name"
-        name="Name"
+        name="Name" 
         type="text"
         placeholder="Name"
         error={!valid.users.Name}
@@ -63,6 +58,9 @@ const UsersForm = () => {
         helperText={!valid.users.UserRole && "User Role must exist"}
         required
       />
+      <Button variant="contained" size="large">
+          Add User
+        </Button>
     </>
   );
 };
