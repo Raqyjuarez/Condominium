@@ -20,9 +20,11 @@ import Button from '@mui/material/Button';
 import {auth} from '../config/Auth-firebase';
 import { signOut } from 'firebase/auth';
 import{useNavigate} from 'react-router-dom';
+import {useAuth} from '../config/AuthCheck';
 
 export default function Sidebar() {
   // const [drawerVisible, setDrawerVisible] = useState(true);
+
   const drawerWidth = {
     closed: 72,
     opened: 256,
@@ -40,8 +42,11 @@ export default function Sidebar() {
 
     const logOut =async  () => {
         await signOut(auth);
-        navigate('/login');
+        window.location.replace('/login');
+        
     }
+
+    const user =useAuth();
 
   return (
     <Box
@@ -53,15 +58,17 @@ export default function Sidebar() {
           {/* <MenuRoundedIcon fontSize="large" /> */}
           <img src={Logo} style={{height: 48, width: 48}}/>
         </IconButton>
-        <Typography component={NavLink} to='/' 
+        <Typography component={NavLink} to='/home' 
           className="test"
           variant="h5"
           sx={{ fontWeight: 800, color: "#212121", textDecoration: 'none', display: drawerState ? 'block' : 'none', width: '184px', height: '29px' }}
         >
           CONDOMINIUM
         </Typography>
-      </DrawerHeader>
-      <List>
+        </DrawerHeader>
+        {user ? (
+        <>
+          <List>
         {linksArray.map(({icon, label, to}) => (
           <ListItem component={NavLink} key={label} to={to} sx={{display: 'block' }} disablePadding>
             <ListItemButton sx={{minHeight: 48, px: 2.5}}>
@@ -83,6 +90,12 @@ export default function Sidebar() {
           >
             Log Out
           </Button>
+        </>
+      ) : (
+        <div></div>
+      )}
+      
+      
     </Box>
   );
 }
