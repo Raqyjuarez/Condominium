@@ -4,6 +4,7 @@ import Form from "../pages/Form";
 import Forms from "../pages/Forms";
 //import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 import EnhancedTable from "../pages/EnhancedTable";
 import { useSelector } from 'react-redux'
 
@@ -15,6 +16,9 @@ export default function MyRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/Users" element={<Forms />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/Users" element={<Form page={Inputs.users} />} />
       <Route
         path="/Residentials"
         element={<Form data={Inputs.residentials} />}

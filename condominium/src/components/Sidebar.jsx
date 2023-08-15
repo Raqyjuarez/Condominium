@@ -1,21 +1,16 @@
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { toggle } from "../app/drawerSlice";
+import { toggle } from "../features/states/drawerSlice";
 import { NavLink } from "react-router-dom";
-import {
-  IconButton,
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import AbcRoundedIcon from "@mui/icons-material/AbcRounded";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import Logo from "../assets/Logo.svg";
 
 export default function Sidebar() {
+  // const [drawerVisible, setDrawerVisible] = useState(true);
   const drawerWidth = {
     closed: 72,
     opened: 256,
@@ -28,6 +23,15 @@ export default function Sidebar() {
     console.log(drawerState);
     dispatch(toggle());
   };
+
+  const navigate = useNavigate();
+
+  const logOut = async () => {
+    await signOut(auth);
+    window.location.replace("/login");
+  };
+
+  const user = useAuth();
 
   return (
     <Box
@@ -53,7 +57,7 @@ export default function Sidebar() {
           to="/"
           className="test"
           sx={{
-            fontSize: '22px',
+            fontSize: "22px",
             fontWeight: 900,
             color: "#212121",
             textDecoration: "none",
@@ -84,6 +88,15 @@ export default function Sidebar() {
           </ListItem>
         ))}
       </List>
+      <Button
+        type="button"
+        onClick={logOut}
+        fullWidth
+        variant="contained"
+        sx={{ mt: 2, mb: 2 }}
+      >
+        Log Out
+      </Button>
     </Box>
   );
 }
