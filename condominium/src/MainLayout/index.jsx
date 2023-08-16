@@ -33,7 +33,7 @@ const MainLayout = () => {
   return (
     <Box sx={{ display: "flex", bgcolor: "#EDE7F6" }}>
       <Sidebar />
-      <Main theme={theme} open={}>
+      <Main theme={theme}>
         <Outlet />
       </Main>
     </Box>
