@@ -1,17 +1,15 @@
 import { TextField, Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import Forms from "./index";
 
 const ResidentialForm = () => {
-
-    const valid = useSelector((state) => state.form.valid);
-    const dispatch = useDispatch();
+  const valid = useSelector((state) => state.form.valid);
+  const dispatch = useDispatch();
 
   return (
-    <Forms formId={2}>
+    <>
       <TextField
         key="Owner"
-        name="Owner"    
+        name="Owner"
         type="text"
         placeholder="Owner"
         error={!valid.residentials.Name}
@@ -38,7 +36,10 @@ const ResidentialForm = () => {
         type="type"
         placeholder="Address"
         error={!valid.residentials.Address}
-        helperText={!valid.residentials.Address && "Address should be 10-25 characters and shouldn't include any special character!"}
+        helperText={
+          !valid.residentials.Address &&
+          "Address should be 10-25 characters and shouldn't include any special character!"
+        }
         required
       />
       <TextField
@@ -51,9 +52,9 @@ const ResidentialForm = () => {
         required
       />
       <Button variant="contained" size="large">
-          Add User
-        </Button>
-    </Forms>
+        Add Residential
+      </Button>
+    </>
   );
 };
 

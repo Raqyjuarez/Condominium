@@ -3,16 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Forms from "./index";
 
 const UsersForm = () => {
-
-    const valid = useSelector((state) => state.form.valid);
-    const dispatch = useDispatch();
+  const valid = useSelector((state) => state.form.valid);
+  const dispatch = useDispatch();
 
   return (
     <>
-    <Forms formId={1}>
       <TextField
         key="Name"
-        name="Name" 
+        name="Name"
         type="text"
         placeholder="Name"
         error={!valid.users.Name}
@@ -61,9 +59,8 @@ const UsersForm = () => {
         required
       />
       <Button variant="contained" size="large">
-          Add User
-        </Button>
-    </Forms>
+        Add User
+      </Button>
     </>
   );
 };

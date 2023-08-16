@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 import { styled, useTheme } from "@mui/material/styles";
+import { Outlet } from "react-router-dom";
+import Sidebar from './Sidebar'
 
 const drawerWidth = 256;
 

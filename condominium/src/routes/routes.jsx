@@ -6,28 +6,25 @@ import Forms from "../pages/Forms";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import EnhancedTable from "../pages/EnhancedTable";
-import { useSelector } from 'react-redux'
+import MainLayout from "../MainLayout";
+import { useSelector } from "react-redux";
 
 export default function MyRoutes() {
-  const Inputs = useSelector((state) => state.form.initialInputs)
-
+  const Inputs = useSelector((state) => state.form.initialInputs);
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/Users" element={<Forms />} />
+      <Route path="/Users" element={<Forms formId={1}/>} />
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/Users" element={<Form page={Inputs.users} />} />
+      <Route path="/Dev" element={<MainLayout />} />
       <Route
         path="/Residentials"
-        element={<Form data={Inputs.residentials} />}
+        element={<Forms formId={2}/>}
       />
       <Route path="/Tickets" element={<Form data={Inputs.tickets} />} />
-      <Route
-        path="/Maintenance"
-        element={<Form data={Inputs.maintenance} />}
-      />
+      <Route path="/Maintenance" element={<Form data={Inputs.maintenance} />} />
       <Route
         path="/Categories"
         element={<EnhancedTable Unit={tables.categories} />}
