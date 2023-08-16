@@ -1,5 +1,6 @@
 import { TextField, Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import Forms from "./index";
 
 const UsersForm = () => {
 
@@ -8,6 +9,7 @@ const UsersForm = () => {
 
   return (
     <>
+    <Forms formId={1}>
       <TextField
         key="Name"
         name="Name" 
@@ -27,7 +29,7 @@ const UsersForm = () => {
         error={!valid.users.Lastname}
         helperText={
           !valid.users.Lastname &&
-          "Lastname should be 3-16 characters and shouldn't include any special character!"
+          "Resident should be 3-16 characters and shouldn't include any special character!"
         }
         required
       />
@@ -61,6 +63,7 @@ const UsersForm = () => {
       <Button variant="contained" size="large">
           Add User
         </Button>
+    </Forms>
     </>
   );
 };

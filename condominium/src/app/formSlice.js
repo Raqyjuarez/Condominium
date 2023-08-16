@@ -8,6 +8,34 @@ const valid = {
     UserPhone: true,
     UserRole: true,
   },
+
+  residentials:{
+    Owner: true,
+    Resident: true,
+    Address: true,
+    ResidentialPhone:true,
+  },
+  tickets:{
+    IdTickets:true,
+    Title: true,
+    UserId: true,
+    CategoryId: true,
+    Priority: true,
+    MaintenanceId: true,
+    Description: true,
+  },
+  maintenance:{
+    IdMaintenance: true,
+    Maintenance: true,
+    AbilityId: true,
+    Ability: true,
+  },
+  categories:{
+    IdCategories: true,
+    Category: true,
+
+  }
+
 };
 
 const initialInputs = {
@@ -69,34 +97,42 @@ const initialInputs = {
     inputs: [
       {
         key: "Owner",
+        name: "Owner",
         type: "text",
         placeholder: "Owner",
-        errorMessage:
+        error: !valid.residentials.Owner,
+        helperText:!valid.residentials.Owner &&
           "Owner should be 3-16 characters and shouldn't include any special character!",
         required: true,
       },
       {
         key: "Resident",
+        name: "Resident",
         type: "text",
         placeholder: "Resident",
-        errorMessage:
+        error: !valid.residentials.Resident,
+        helperText:!valid.residentials.Resident &&
           "Resident should be 3-16 characters and shouldn't include any special character!",
         required: true,
       },
       {
         key: "Address",
+        name: "Address",
         type: "text",
         placeholder: "Address",
-        errorMessage:
+        error: !valid.residentials.Address,
+        helperText:!valid.residentials.Address &&
           "Address should be 10-25 characters and shouldn't include any special character!",
         required: true,
       },
 
       {
         key: "ResidentialPhone",
+        name: "ResidentialPhone",
         type: "number",
         placeholder: "Phone Number",
-        errorMessage: "Only use numbers",
+        error: !valid.residentials.ResidentialPhone,
+        helperText: !valid.residentials.ResidentialPhone && "Only use numbers",
         required: true,
         onChange: "onInputChange",
       },
@@ -106,56 +142,70 @@ const initialInputs = {
     id: 3,
     inputs: [
       {
-        key: "ID",
+        key: "IdTickets",
+        name: "IdTickets",
         type: "number",
         placeholder: "ID",
-        errorMessage: "Use only numbers!",
+        error: !valid.tickets.IdTickets,
+        helperText: !valid.tickets.IdTickets && "Use only numbers!",
         required: true,
       },
       {
         key: "Title",
+        name: "Title",
         type: "text",
         placeholder: "Title",
-        errorMessage:
+        error: !valid.tickets.Title,
+        helperText:!valid.tickets.Title &&
           "Title should be 3-16 characters and shouldn't include any special character!",
         required: true,
       },
       {
-        key: "User ID",
+        key: "UserId",
+        name: "UserId",
         type: "text",
         placeholder: "User ID",
-        errorMessage:
+        error: !valid.tickets.UserId,
+        helperText: !valid.tickets.UserId &&
           "Address should be 10-25 characters and shouldn't include any special character!",
         required: true,
       },
 
       {
-        key: "Category ID",
+        key: "CategoryId",
+        name: "CategoryId",
         type: "number",
         placeholder: "Category ID",
-        errorMessage: "Only use numbers",
+        error: !valid.tickets.CategoryId,
+        helperText: !valid.tickets.CategoryId && "Only use numbers",
         required: true,
       },
       {
         key: "Priority",
+        name: "Priority",
         type: "number",
         placeholder: "Priority",
-        errorMessage: "Only use numbers",
+        error: !valid.tickets.Priority,
+        helperText: !valid.tickets.Priority && "Only use numbers",
         required: true,
       },
       {
-        key: "Maitenance ID",
+        key: "MaintenanceId",
+        name: "MaintenanceId",
         type: "number",
-        placeholder: "Maitenance ID",
-        errorMessage: "Only use numbers",
+        placeholder: "Maintenance ID",
+        error: !valid.tickets.MaintenanceId,
+        helperText: !valid.tickets.MaintenanceId && "Only use numbers",
         required: true,
       },
 
       {
         key: "Description",
+        name: "Description",
         type: "text",
         placeholder: "Description",
-        errorMessage: "Use 250 words or more",
+        error:!valid.tickets.Description,
+        helperText: !valid.tickets.Description && "Use 250 words or more",
         required: true,
       },
     ],
@@ -164,33 +214,41 @@ const initialInputs = {
     id: 4,
     inputs: [
       {
-        key: "ID",
+        key: "IdMaintenance",
+        name: "IdMaintenance",
         type: "number",
         placeholder: "ID",
-        errorMessage: "Use only numbers",
+        error: !valid.maintenance.IdMaintenance,
+        helperText: !valid.maintenance.IdMaintenance && "Use only numbers",
         required: true,
       },
       {
-        key: "Maitenance",
+        key: "Maintenance",
+        name: "Maintenance",
         type: "text",
-        placeholder: "Meitenance",
-        errorMessage:
-          "Meitenance should be 3-16 characters and shouldn't include any special character!",
+        placeholder: "Maintenance",
+        error: !valid.maintenance.Maintenance,
+        helperText:!valid.maintenance.Maintenance && 
+          "Maintenance should be 3-16 characters and shouldn't include any special character!",
         required: true,
       },
       {
-        key: "Ability ID",
+        key: "AbilityId",
+        name: "AbilityId",
         type: "number",
         placeholder: "Ability ID",
-        errorMessage: "Use only numbers",
+        error: !valid.maintenance.AbilityId,
+        helperText: !valid.maintenance.AbilityId && "Use only numbers",
         required: true,
       },
 
       {
         key: "Ability",
+        name: "Ability",
         type: "text",
         placeholder: "Ability",
-        errorMessage: "Write the Ability needed without special characters",
+        error: !valid.maintenance.Ability,
+        helperText: !valid.maintenance.Ability && "Write the Ability needed without special characters",
         required: true,
       },
     ],
@@ -199,17 +257,21 @@ const initialInputs = {
     id: 5,
     inputs: [
       {
-        key: "ID",
+        key: "IdCategories",
+        name: "IdCategories",
         type: "number",
         placeholder: "ID",
-        errorMessage: "Use only numbers",
+        error: !valid.categories.IdCategories,
+        helperText: !valid.categories.IdCategories && "Use only numbers",
         required: true,
       },
       {
         key: "Category",
+        name: "Category",
         type: "text",
         placeholder: "Category",
-        errorMessage:
+        error: !valid.categories.Category,
+        helperText:!valid.categories.Category && 
           "Category should be 3-10 characters and shouldn't include any special character!",
         required: true,
       },

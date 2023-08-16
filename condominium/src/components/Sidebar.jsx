@@ -1,12 +1,14 @@
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { toggle } from "../features/states/drawerSlice";
+import { toggle } from "../app/drawerSlice";
 import { NavLink } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import AbcRoundedIcon from "@mui/icons-material/AbcRounded"
 import ListItemText from "@mui/material/ListItemText";
+import { Box, IconButton, Typography, Button } from "@mui/material";
 import Logo from "../assets/Logo.svg";
 
 export default function Sidebar() {
@@ -24,14 +26,14 @@ export default function Sidebar() {
     dispatch(toggle());
   };
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const logOut = async () => {
     await signOut(auth);
     window.location.replace("/login");
   };
 
-  const user = useAuth();
+  //const user = useAuth();
 
   return (
     <Box

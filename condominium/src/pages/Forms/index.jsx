@@ -1,7 +1,21 @@
 import { Box, Paper } from "@mui/material";
+import ResidentialForm from "./ResidentialForm";
 import UsersForm from "./UsersForm";
 
-const Forms = () => {
+const Forms = ({ formId }) => {
+  let selectedForm;
+
+  switch (formId) {
+    case 1:
+      selectedForm = <UsersForm />;
+      break;
+    case 2:
+      selectedForm = <ResidentialForm />;
+      break;
+    default:
+      selectedForm = <p>Invalid form id</p>;
+  }
+
   return (
     <Box
       sx={{
@@ -24,10 +38,9 @@ const Forms = () => {
           borderRadius: 2,
         }}
       >
-        <UsersForm />
+        {selectedForm}
       </Paper>
     </Box>
   );
 };
-
 export default Forms;
