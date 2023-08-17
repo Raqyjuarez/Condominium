@@ -18,7 +18,6 @@ export default function MyRoutes() {
       <Route path="/Users" element={<Forms formId={1}/>} />
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/Dev" element={<MainLayout />} />
       <Route
         path="/Residentials"
         element={<Forms formId={2}/>}

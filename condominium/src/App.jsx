@@ -2,6 +2,7 @@ import Sidebar from "./components/Sidebar";
 import MyRoutes from "./routes/routes";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./assets/Theme";
+import Routes from './routes'
 import Box from "@mui/material/Box";
 
 function App() {
