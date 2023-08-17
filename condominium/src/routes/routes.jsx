@@ -22,7 +22,7 @@ export default function MyRoutes() {
         path="/Residentials"
         element={<Forms formId={2}/>}
       />
-      <Route path="/Tickets" element={<Form data={Inputs.tickets} />} />
+      <Route path="/Tickets" element={<Forms formId={3}/>}/>
       <Route path="/Maintenance" element={<Form data={Inputs.maintenance} />} />
       <Route
         path="/Categories"

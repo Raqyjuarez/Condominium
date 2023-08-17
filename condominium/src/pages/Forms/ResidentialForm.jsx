@@ -12,9 +12,9 @@ const ResidentialForm = () => {
         name="Owner"
         type="text"
         placeholder="Owner"
-        error={!valid.residentials.Name}
+        error={!valid.residentials.Owner}
         helperText={
-          !valid.residentials.Name &&
+          !valid.residentials.Owner &&
           "Owner should be 3-16 characters and shouldn't include any special character!"
         }
       />

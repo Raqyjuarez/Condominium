@@ -1,9 +1,10 @@
 import { Box, Paper } from "@mui/material";
 import ResidentialForm from "./ResidentialForm";
 import UsersForm from "./UsersForm";
-
+import TicketsForm from "./TicketsForm";
 const Forms = ({ formId }) => {
   let selectedForm;
+  console.log(formId);
 
   switch (formId) {
     case 1:
@@ -11,6 +12,9 @@ const Forms = ({ formId }) => {
       break;
     case 2:
       selectedForm = <ResidentialForm />;
+      break;
+    case 3:
+      selectedForm = <TicketsForm/>;
       break;
     default:
       selectedForm = <p>Invalid form id</p>;
