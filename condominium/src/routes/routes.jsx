@@ -23,9 +23,10 @@ export default function MyRoutes() {
         element={<Forms formId={2}/>}
       />
       <Route path="/Tickets" element={<Forms formId={3}/>}/>
-      <Route path="/Maintenance" element={<Form data={Inputs.maintenance} />} />
+      <Route path="/Maintenance" element={<Forms formId={4} />} />
       <Route
         path="/Categories"
+        //element={<Forms formId={5} />} 
         element={<EnhancedTable Unit={tables.categories} />}
       />
     </Routes>
