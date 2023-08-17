@@ -8,7 +8,7 @@ import { toggle } from "../app/drawerSlice";
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ open }) => ({
     width: "100%",
-    backgroundColor: 'red',
+    backgroundColor: '#EDE7F6',
     padding: 16,
     flexGrow: 1,
     transition: open ? "margin 0.2 ease-out" : "margin 0.2 ease-in",

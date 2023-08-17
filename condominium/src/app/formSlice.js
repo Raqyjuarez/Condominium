@@ -8,7 +8,6 @@ const valid = {
     UserPhone: true,
     UserRole: true,
   },
-
   residentials:{
     Owner: true,
     Resident: true,

@@ -5,7 +5,7 @@ export const drawerSlice = createSlice({
   initialState: { opened: true },
   reducers: {
     toggle: (state) => {
-      state.value = !state.value;
+      state.opened = !state.opened;
     },
   },
 });

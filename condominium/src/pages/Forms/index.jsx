@@ -28,7 +28,7 @@ const Forms = ({ formId }) => {
     >
       <Paper
         component="form"
-        elevation={8}
+        elevation={2}
         sx={{
           display: "flex",
           flexDirection: "column",
