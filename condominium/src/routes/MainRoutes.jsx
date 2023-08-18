@@ -2,6 +2,7 @@ import EnhancedTable from "../pages/EnhancedTable.jsx";
 import MainLayout from "../MainLayout";
 import Forms from "../pages/Forms";
 import Home from "../pages/Home";
+import Tickets from "../pages/Tickets";
 
 const headers = {
   users: {
@@ -193,6 +194,8 @@ const MainRoutes = {
         },
       ],
     },
+    { path: '/MyTickets',
+  element: <Tickets />}
   ],
 };
 
