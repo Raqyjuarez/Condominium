@@ -20,6 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import { NavLink } from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -80,22 +81,22 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all options'}}
+            inputProps={{ "aria-label": "select all options" }}
           />
         </TableCell>
-        {options.headers.map((column) => (
+        {options.headers.map((columnId) => (
           <TableCell
-            key={column.id}
-            align={column.numeric ? "right" : "left"}
-            sortDirection={orderBy === column.id ? order : false}
+            key={columnId}
+            sortDirection={orderBy === columnId ? order : false}
           >
             <TableSortLabel
-              active={orderBy === column.id}
-              direction={orderBy === column.id ? order : "asc"}
-              onClick={createSortHandler(column.id)}
+              active={orderBy === columnId}
+              direction={orderBy === columnId ? order : "asc"}
+              onClick={createSortHandler(columnId)}
+              sx={{ textTransform: 'uppercase' }}
             >
-              {column.label}
-              {orderBy === column.id ? (
+              {columnId}
+              {orderBy === columnId ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
@@ -121,12 +122,12 @@ function EnhancedTableToolbar({ numSelected, options, resetOrder }) {
   return (
     <Toolbar
       sx={{
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: "#7E57C2",
-          color: '#FFF'
+          color: "#FFF",
         }),
       }}
     >
@@ -135,14 +136,17 @@ function EnhancedTableToolbar({ numSelected, options, resetOrder }) {
           sx={{ flex: "1 1 100%" }}
           variant="subtitle1"
           component="div"
-          color='inherit'
+          color="inherit"
         >
           {numSelected} selected
         </Typography>
       ) : (
-        <Button variant="outlined">
+        <Button
+          variant="outlined"
+          component={NavLink}
+          to={`/${options.name}/CU`}
+        >
           Add new {options.name}
-
         </Button>
       )}
       {numSelected > 0 ? (
@@ -236,74 +240,78 @@ export default function EnhancedTable({ options, series }) {
         minWidth: "100%",
         bgcolor: "#FFF",
         borderRadius: 2,
-        border: '2px dashed rgba(145, 158, 171, 0.24)',
+        border: "2px dashed rgba(145, 158, 171, 0.24)",
         overflow: "hidden",
       }}
     >
-        <EnhancedTableToolbar numSelected={selected.length} options={options} resetOrder={setOrderBy}/>
-        <TableContainer>
-          <Table stickyHeader>
-            <EnhancedTableHead
-              options={options}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={series.length}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `chkbox-${index}`;
+      <EnhancedTableToolbar
+        numSelected={selected.length}
+        options={options}
+        resetOrder={setOrderBy}
+      />
+      <TableContainer>
+        <Table stickyHeader>
+          <EnhancedTableHead
+            options={options}
+            numSelected={selected.length}
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={series.length}
+          />
+          <TableBody>
+            {visibleRows.map((row, index) => {
+              const isItemSelected = isSelected(row.id);
+              const labelId = `chkbox-${index}`;
 
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    {Object.keys(row).map((key) => (
-                      <TableCell key={key}>{row[key]}</TableCell>
-                    ))}
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
+              return (
                 <TableRow
-                  style={{
-                    height: 65 * emptyRows,
-                  }}
+                  hover
+                  onClick={(event) => handleClick(event, row.id)}
+                  role="checkbox"
+                  aria-checked={isItemSelected}
+                  tabIndex={-1}
+                  key={row.id}
+                  selected={isItemSelected}
+                  sx={{ cursor: "pointer" }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      color="primary"
+                      checked={isItemSelected}
+                      inputProps={{
+                        "aria-labelledby": labelId,
+                      }}
+                    />
+                  </TableCell>
+                  {Object.keys(row).map((key) => (
+                    <TableCell key={key}>{row[key]}</TableCell>
+                  ))}
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={series.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+              );
+            })}
+            {emptyRows > 0 && (
+              <TableRow
+                style={{
+                  height: 65 * emptyRows,
+                }}
+              >
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[]}
+        component="div"
+        count={series.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </Box>
   );
 }

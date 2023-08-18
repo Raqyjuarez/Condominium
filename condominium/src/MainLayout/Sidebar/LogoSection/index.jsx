@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const LogoSection = ({ opened, toggle }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1}}>
-      <IconButton onClick={toggle} sx={{ transform: !opened ? 'rotate(-180deg)' : '', transition: 'transform 0.275s linear' }}>
+      <IconButton onClick={toggle} sx={{ transform: !opened ? 'rotate(-180deg)' : '', transition: opened ? 'transform 0.175s linear' : 'transform 0.175s linear' }}>
         <img src={Logo} style={{ height: 40, width: 40 }} />
       </IconButton>
       <Typography
