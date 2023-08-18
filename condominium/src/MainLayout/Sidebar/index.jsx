@@ -43,15 +43,6 @@ const Sidebar = ({ drawerOpen, drawerToggle }) => {
       <List disablePadding>
         {linksArray.map((item) => (
           <NavItem key={item.label} item={item}/>
-          // <ListItem component={NavLink} key={label} to={to} disablePadding>
-          //   <ListItemButton sx={{ minHeight: 24 }}>
-          //     <ListItemIcon>{icon}</ListItemIcon>
-          //     <ListItemText
-          //       primary={label}
-          //       sx={{ display: drawerOpened ? "block" : "none", color: "#fff" }}
-          //     />
-          //   </ListItemButton>
-          // </ListItem>
         ))}
       </List>
     </Box>

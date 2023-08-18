@@ -1,17 +1,35 @@
-import EnhancedTable from "../pages/EnhancedTable";
+import EnhancedTable from "../pages/EnhancedTable.jsx";
 import MainLayout from "../MainLayout";
-import Test from "../pages/Test";
 import Forms from "../pages/Forms";
+import Home from "../pages/Home";
 
 const tables = {
   categories: {
-    name: "Categories",
-    fields: [
-      { id: "id", headerName: "ID" },
-      { id: "category", headerName: "Category" },
+    name: "Category",
+    headers: [
+      { id: "id", label: "ID" },
+      { id: "category", label: "Category" },
     ],
   },
 };
+
+function createData(id, category) {
+  return { id, category };
+}
+
+const rows = [
+  createData(1, "Gardening"),
+  createData(2, "Plumbing"),
+  createData(3, "Cleaning"),
+  createData(4, "Electronics"),
+  createData(5, "Cooking"),
+  createData(6, "Furniture"),
+  createData(7, "Automotive"),
+  createData(8, "Sports"),
+  createData(9, "Fashion"),
+  createData(10, "Books"),
+];
+
 
 const MainRoutes = {
   path: "/",
@@ -19,7 +37,7 @@ const MainRoutes = {
   children: [
     {
       path: "/",
-      element: <Test />,
+      element: <Home />,
     },
     {
       path: "/Users",
@@ -39,7 +57,7 @@ const MainRoutes = {
     },
     {
       path: "/Categories",
-      element: <EnhancedTable Unit={tables.categories} />,
+      element: <EnhancedTable options={tables.categories} series={rows} />,
     },
   ],
 };

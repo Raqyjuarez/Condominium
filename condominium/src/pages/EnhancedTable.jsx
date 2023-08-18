@@ -25,25 +25,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
-function createData(id, category) {
-  return { id, category };
-}
-
-const rows = [
-  createData(1, 'Gardening'),
-  createData(2, 'Plumbing'),
-  createData(3, 'Cleaning'),
-  createData(4, 'Electronics'),
-  createData(5, 'Cooking'),
-  createData(6, 'Furniture'),
-  createData(7, 'Automotive'),
-  createData(8, 'Sports'),
-  createData(9, 'Fashion'),
-  createData(10, 'Books'),
-];
-
-console.log(rows[0]);
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -80,15 +61,23 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
-    Unit,
+    options,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
-    <TableHead>
-      <TableRow>
+    <TableHead sx={{ ".MuiTableCell-root": { borderBottom: "none" } }}>
+      <TableRow
+        sx={{
+          ".MuiTableCell-root": {
+            bgcolor: "#F8F9FA",
+            color: "#2F3746",
+            fontWeight: 500,
+          },
+        }}
+      >
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
@@ -97,9 +86,10 @@ function EnhancedTableHead(props) {
             onChange={onSelectAllClick}
           />
         </TableCell>
-        {Unit.fields.map((column) => (
+        {options.headers.map((column) => (
           <TableCell
             key={column.id}
+            align={column.numeric ? "right" : "left"}
             sortDirection={orderBy === column.id ? order : false}
           >
             <TableSortLabel
@@ -107,7 +97,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === column.id ? order : "asc"}
               onClick={createSortHandler(column.id)}
             >
-              {column.headerName}
+              {column.label}
               {orderBy === column.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -118,13 +108,6 @@ function EnhancedTableHead(props) {
         ))}
       </TableRow>
     </TableHead>
-    // <Box sx={{ bgcolor: "#FAFAFA", width: "100vw" }}>
-    //   <Box sx={{ height: "72px", display: "flex", alignItems: "center" }}>
-    //     <Button variant="contained" startIcon={<AddRoundedIcon />}>
-    //       Add new {page[1].field}
-    //     </Button>
-    //   </Box>
-    // </Box>
   );
 }
 
@@ -137,14 +120,16 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar({ numSelected, Unit }) {
+function EnhancedTableToolbar({ numSelected, options }) {
   return (
     <Toolbar
       sx={{
+        justifyContent: 'space-between',
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          bgcolor: "red",
+          bgcolor: "#7E57C2",
+          color: '#FFF'
         }),
       }}
     >
@@ -153,17 +138,19 @@ function EnhancedTableToolbar({ numSelected, Unit }) {
           sx={{ flex: "1 1 100%" }}
           variant="subtitle1"
           component="div"
+          color='inherit'
         >
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
-          {Unit.name}
-        </Typography>
+        <Button variant="outlined">
+          Add new {options.name}
+
+        </Button>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton color="inherit">
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -182,12 +169,11 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({ Unit }) {
+export default function EnhancedTable({ options, series }) {
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
@@ -198,7 +184,7 @@ export default function EnhancedTable({ Unit }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = series.map((n) => n.name);
       setSelected(newSelected);
       return;
     }
@@ -235,13 +221,12 @@ export default function EnhancedTable({ Unit }) {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - series.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
+      stableSort(series, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
@@ -249,23 +234,26 @@ export default function EnhancedTable({ Unit }) {
   );
 
   return (
-    <Box sx={{ width: "100%", margin: 4 }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} Unit={Unit} />
+    <Box
+      sx={{
+        minWidth: "100%",
+        bgcolor: "#FFF",
+        borderRadius: 2,
+        border: '2px dashed rgba(145, 158, 171, 0.24)',
+        overflow: "hidden",
+      }}
+    >
+        <EnhancedTableToolbar numSelected={selected.length} options={options} />
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size="medium"
-          >
+          <Table stickyHeader>
             <EnhancedTableHead
-              Unit={Unit}
+              options={options}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={series.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -279,7 +267,7 @@ export default function EnhancedTable({ Unit }) {
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={labelId}
+                    key={row.id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
@@ -301,7 +289,7 @@ export default function EnhancedTable({ Unit }) {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: 65 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -311,15 +299,14 @@ export default function EnhancedTable({ Unit }) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[]}
           component="div"
-          count={rows.length}
+          count={series.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>
     </Box>
   );
 }
