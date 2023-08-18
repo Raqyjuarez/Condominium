@@ -1,11 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import PropTypes from "prop-types";
-import Paper from "@mui/material/Paper";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -84,6 +80,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
+            inputProps={{ 'aria-label': 'select all options'}}
           />
         </TableCell>
         {options.headers.map((column) => (
@@ -120,7 +117,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar({ numSelected, options }) {
+function EnhancedTableToolbar({ numSelected, options, resetOrder }) {
   return (
     <Toolbar
       sx={{
@@ -155,8 +152,8 @@ function EnhancedTableToolbar({ numSelected, options }) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
+        <Tooltip title="Reset filter">
+          <IconButton onClick={() => resetOrder("")}>
             <FilterListIcon />
           </IconButton>
         </Tooltip>
@@ -184,7 +181,7 @@ export default function EnhancedTable({ options, series }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = series.map((n) => n.name);
+      const newSelected = series.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -243,7 +240,7 @@ export default function EnhancedTable({ options, series }) {
         overflow: "hidden",
       }}
     >
-        <EnhancedTableToolbar numSelected={selected.length} options={options} />
+        <EnhancedTableToolbar numSelected={selected.length} options={options} resetOrder={setOrderBy}/>
         <TableContainer>
           <Table stickyHeader>
             <EnhancedTableHead

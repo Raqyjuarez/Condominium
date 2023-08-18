@@ -1,19 +1,16 @@
-import {
-  Box,
-  List
-} from "@mui/material";
+import { Box, List, styled } from "@mui/material";
 import LogoSection from "./LogoSection";
 import AbcRoundedIcon from "@mui/icons-material/AbcRounded";
-import GroupIcon from '@mui/icons-material/Group';
-import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import ConstructionIcon from '@mui/icons-material/Construction';
-import CategoryIcon from '@mui/icons-material/Category';
+import GroupIcon from "@mui/icons-material/Group";
+import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import CategoryIcon from "@mui/icons-material/Category";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle } from "../../app/drawerSlice";
 import NavItem from "./NavItem";
 
-const Sidebar = ({ drawerOpen, drawerToggle }) => {
+const Sidebar = () => {
   const drawerOpened = useSelector((state) => state.drawer.opened);
   const dispatch = useDispatch();
   const drawerWidth = {
@@ -26,28 +23,48 @@ const Sidebar = ({ drawerOpen, drawerToggle }) => {
   };
 
   return (
-    <Box
+    <StyledBox
+      className={drawerOpened ? "opened" : "closed"}
       component="nav"
-      sx={{
-        display: "flex",
-        flexDirection: 'column',
-        alignItems: drawerOpened ? 'normal' : 'center',
-        p: 2,
-        minWidth: drawerOpened ? drawerWidth.opened : drawerWidth.closed,
-        borderRight: '2px dashed rgba(145, 158, 171, 0.24)'
-      }}
+      opened={drawerOpened}
+      drawer={drawerWidth}
     >
       <Box sx={{ display: "flex", marginBottom: 2 }}>
         <LogoSection opened={drawerOpened} toggle={handleDrawerState} />
       </Box>
       <List disablePadding>
         {linksArray.map((item) => (
-          <NavItem key={item.label} item={item}/>
+          <NavItem key={item.label} item={item} />
         ))}
       </List>
-    </Box>
+    </StyledBox>
   );
 };
+
+const StyledBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "opened" && prop !== "drawer",
+})(({ opened, drawer }) => ({
+  p: 2,
+  display: "flex",
+  flexDirection: "column",
+  borderRight: "2px dashed rgba(145, 158, 171, 0.24)",
+
+  "&.opened": {
+    width: drawer.opened,
+    minWidth: drawer.opened,
+    alignItems: "normal",
+    transition:
+      "width 0.275s ease-out, min-width 0.275s ease-out",
+  },
+
+  "&.closed": {
+    width: drawer.closed,
+    minWidth: drawer.closed,
+    alignItems: "center",
+    transition:
+      "width 0.175s linear, min-width 0.175s linear",
+  },
+}));
 
 const linksArray = [
   {
