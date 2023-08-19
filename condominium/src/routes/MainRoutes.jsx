@@ -1,8 +1,8 @@
 import EnhancedTable from "../pages/EnhancedTable.jsx";
 import MainLayout from "../MainLayout";
 import Forms from "../pages/Forms";
-import Home from "../pages/Home";
 import Tickets from "../pages/Tickets";
+import Dashboard from "../pages/Dashboard/index.jsx";
 
 const headers = {
   users: {
@@ -96,7 +96,7 @@ const MainRoutes = {
   children: [
     {
       path: "/",
-      element: <Home />,
+      element: <Dashboard />,
     },
     {
       path: "Users",
