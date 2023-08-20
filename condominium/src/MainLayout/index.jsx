@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle } from "../app/drawerSlice";
 
+
 const Main = styled("main")({
   width: "100%",
   backgroundColor: "#EDE7F6",

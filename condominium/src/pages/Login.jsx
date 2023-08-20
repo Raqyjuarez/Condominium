@@ -35,6 +35,8 @@ export default function Login() {
 
         } catch (error) {
             console.log(error.message);
+            alert("Credenciales incorrectas, intentelo nuevamente");
+            navigate('/Login');
         }
     }
 
