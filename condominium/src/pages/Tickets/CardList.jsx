@@ -1,4 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
+import TicketCard from "./TicketCard";
 
 const CardList = ({ title, data }) => {
   return (
@@ -18,13 +19,14 @@ const CardList = ({ title, data }) => {
       >
         {title}
       </Typography>
-      <Grid container>
+      <Grid container spacing={2}>
         {data.map((card) => (
           <Grid key={card.id} item xs={12}>
-            <Box sx={{ bgcolor: "#D1C4E9", padding: 1, borderRadius: 2 }}>
+            <TicketCard card={card}/>
+            {/* <Box sx={{ bgcolor: "#D1C4E9", padding: 1, borderRadius: 2 }}>
               {" "}
               <Typography variant="h6">{card.title}</Typography>
-            </Box>
+            </Box> */}
           </Grid>
         ))}
       </Grid>

@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import CardList from "./CardList";
 
+
 const MyTickets = () => {
   const data = [
     {
@@ -23,6 +24,16 @@ const MyTickets = () => {
     },
     {
       id: 3,
+      title: "Bathroom",
+      description: "Sink not working",
+      status: "Fixed",
+      userId: "2",
+      categoryId: "2",
+      maintenanceId: "1",
+    },
+
+    {
+      id: 4,
       title: "Bathroom",
       description: "Sink not working",
       status: "Fixed",
