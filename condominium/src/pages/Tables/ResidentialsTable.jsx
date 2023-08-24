@@ -4,8 +4,8 @@ import { fetchUsers } from "../../app/userSlice";
 import EnhancedTable from "./index";
 import { Skeleton, TableCell } from "@mui/material";
 
-const UsersTable = () => {
-  const series = useSelector((state) => state.residential.residentialsArray);
+const ResidentialsTable = () => {
+  const series = useSelector((state) => state.residentials.residentialsArray);
   console.log(series);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -21,10 +21,10 @@ const UsersTable = () => {
     return (
       <>
         <TableCell>{row.id}</TableCell>
-        <TableCell>{row.user.ownerId}</TableCell>
-        <TableCell>{row.user.residentId}</TableCell>
-        <TableCell>{row.user.address}</TableCell>
-        <TableCell>{row.user.residentialPhone}</TableCell>
+        <TableCell>{row.residential.ownerId}</TableCell>
+        <TableCell>{row.residential.residentId}</TableCell>
+        <TableCell>{row.residential.address}</TableCell>
+        <TableCell>{row.residential.residentialPhone}</TableCell>
       </>
     );
   };
@@ -53,4 +53,4 @@ const UsersTable = () => {
   );
 };
 
-export default UsersTable;
+export default ResidentialsTable;

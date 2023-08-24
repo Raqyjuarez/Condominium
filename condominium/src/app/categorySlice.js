@@ -20,34 +20,34 @@ const valid = {
 };
 
 export const addCategory = createAsyncThunk(
-  "categorys/addCategory",
+  "categories/addCategory",
   async (category) => {
-    const addCategoryRef = await addDoc(collection(db, "Categorys"), category);
+    const addCategoryRef = await addDoc(collection(db, "Categories"), category);
     const newCategory = { id: addCategoryRef.id, category };
     return newCategory;
   }
 );
 
-export const fetchCategorys = createAsyncThunk(
-  "categorys/fetchCategorys",
+export const fetchCategories = createAsyncThunk(
+  "categories/fetchCategories",
   async () => {
-    const querySnapshot = await getDocs(collection(db, "Categorys"));
-    const categorys = querySnapshot.docs.map((doc) => ({
+    const querySnapshot = await getDocs(collection(db, "Categories"));
+    const categories = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       category: doc.data(),
     }));
-    console.log(categorys);
-    return categorys;
+    console.log(categories);
+    return categories;
   }
 );
 
 export const deleteCategory = createAsyncThunk(
-  "categorys/deleteCategory",
+  "categories/deleteCategory",
   async (id) => {
-    const categorys = await getDocs(collection(db, "Categorys"));
-    for (var snap of categorys.docs) {
+    const categories = await getDocs(collection(db, "Categories"));
+    for (var snap of categories.docs) {
       if (snap.id === id) {
-        await deleteDoc(doc(db, "Categorys", snap.id));
+        await deleteDoc(doc(db, "Categories", snap.id));
       }
     }
     return id;
@@ -55,12 +55,12 @@ export const deleteCategory = createAsyncThunk(
 );
 
 export const updateCategory = createAsyncThunk(
-  "categorys/updateCategory",
+  "categories/updateCategory",
   async (editedCategory) => {
-    const categorys = await getDocs(collection(db, "Categorys"));
-    for (var snap of categorys.docs) {
+    const categories = await getDocs(collection(db, "Categories"));
+    for (var snap of categories.docs) {
       if (snap.id === editedCategory.id) {
-        const categoryRef = doc(db, "Categorys", snap.id);
+        const categoryRef = doc(db, "Categories", snap.id);
         await updateDoc(categoryRef, editedCategory.category);
       }
     }
@@ -68,8 +68,8 @@ export const updateCategory = createAsyncThunk(
   }
 );
 
-const categorysSlice = createSlice({
-  name: "Categorys",
+const categoriesSlice = createSlice({
+  name: "Categories",
   initialState: {
     actual: "",
     category,
@@ -83,7 +83,7 @@ const categorysSlice = createSlice({
         state.categoriesArray.push(action.payload);
         state.actual = "";
       })
-      .addCase(fetchCategorys.fulfilled, (state, action) => {
+      .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categoriesArray = action.payload;
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
@@ -103,4 +103,4 @@ const categorysSlice = createSlice({
   },
 });
 
-export default categorysSlice.reducer;
+export default categoriesSlice.reducer;

@@ -11,10 +11,12 @@ export const store = configureStore({
   reducer: {
     drawer: drawerSlice,
     form: formSlice,
+
     users: userSlice,
     residentials: residentialSlice,
     maintenance: maintenanceSlice,
     tickets: ticketSlice,
-    categorys: categorySlice,
+    categories: categorySlice,
+    
   },
 });

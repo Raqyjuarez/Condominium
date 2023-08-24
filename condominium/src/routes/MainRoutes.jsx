@@ -5,7 +5,8 @@ import Tickets from "../pages/Tickets";
 import Dashboard from "../pages/Dashboard/index.jsx";
 import { useSelector } from "react-redux";
 import { fetchUsers } from "../app/userSlice.js";
-import UsersTable from "../pages/Tables/UsersTable.jsx";
+import UsersTable from "../pages/Tables/UsersTable";
+import ResidentialsTable from "../pages/Tables/ResidentialsTable";
 
 const headers = {
   users: {
@@ -93,11 +94,6 @@ const data = {
   ],
 };
 
-const handleUsers = () => {
-  const usersArray = useSelector(state => state.users.usersArray)
-  return [ usersArray, fetchUsers ]
-};
-
 const MainRoutes = {
   path: "/",
   element: <MainLayout />,
@@ -115,7 +111,7 @@ const MainRoutes = {
         },
         {
           path: "/Users/CU",
-          element: <Forms key={1} formId={1} />,
+          element: <Forms formId={1} />,
         },
       ],
     },
@@ -124,17 +120,11 @@ const MainRoutes = {
       children: [
         {
           path: "/Residentials",
-          element: (
-            <EnhancedTable
-              key={headers.residentials.name}
-              options={headers.residentials}
-              series={data.residentials}
-            />
-          ),
+          element: <ResidentialsTable />,
         },
         {
           path: "/Residentials/CU",
-          element: <Forms key={2} formId={2} />,
+          element: <Forms formId={2} />,
         },
       ],
     },
@@ -153,7 +143,7 @@ const MainRoutes = {
         },
         {
           path: "/Tickets/CU",
-          element: <Forms key={3} formId={3} />,
+          element: <Forms formId={3} />,
         },
         ,
       ],
@@ -173,7 +163,7 @@ const MainRoutes = {
         },
         {
           path: "/Maintenance/CU",
-          element: <Forms key={4} formId={4} />,
+          element: <Forms formId={4} />,
         },
       ],
     },
@@ -192,7 +182,7 @@ const MainRoutes = {
         },
         {
           path: "/Categories/CU",
-          element: <Forms key={5} formId={5} />,
+          element: <Forms formId={5} />,
         },
       ],
     },
