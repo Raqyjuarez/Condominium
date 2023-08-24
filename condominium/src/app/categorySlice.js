@@ -74,30 +74,30 @@ const categorysSlice = createSlice({
     actual: "",
     category,
     valid,
-    categorysArray: [],
+    categoriesArray: [],
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addCategory.fulfilled, (state, action) => {
-        state.categorysArray.push(action.payload);
+        state.categoriesArray.push(action.payload);
         state.actual = "";
       })
       .addCase(fetchCategorys.fulfilled, (state, action) => {
-        state.categorysArray = action.payload;
+        state.categoriesArray = action.payload;
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
-        state.categorysArray = state.categorysArray.filter(
+        state.categoriesArray = state.categoriesArray.filter(
           (category) => category.id !== action.payload
         );
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         const { id, category } = action.payload;
-        const categoryIndex = state.categorysArray.findIndex(
+        const categoryIndex = state.categoriesArray.findIndex(
           (category) => category.id === id
         );
         if (categoryIndex !== -1) {
-          state.categorysArray[categoryIndex] = { id: id, category };
+          state.categoriesArray[categoryIndex] = { id: id, category };
         }
       });
   },

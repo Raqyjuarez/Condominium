@@ -10,15 +10,15 @@ import {
 import db from "../config/firebase";
 
 const residential = {
-  OwnerId: "",
-  ResidentId: "",
+  ownerId: "",
+  residentId: "",
   address: "",
   residentialPhone: "",
 };
 
 const valid = {
-  OwnerId: true,
-  ResidentId: true,
+  ownerId: true,
+  residentId: true,
   address: true,
   residentialPhone: true,
 };

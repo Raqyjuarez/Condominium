@@ -20,13 +20,13 @@ const UsersForm = () => {
         }
       />
       <TextField
-        key="Lastname"
-        name="Lastname"
+        key="lastname"
+        name="lastname"
         type="text"
-        placeholder="Lastname"
-        error={!valid.users.Lastname}
+        placeholder="lastname"
+        error={!valid.users.lastname}
         helperText={
-          !valid.users.Lastname &&
+          !valid.users.lastname &&
           "Resident should be 3-16 characters and shouldn't include any special character!"
         }
         required
