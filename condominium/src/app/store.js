@@ -14,9 +14,9 @@ export const store = configureStore({
 
     users: userSlice,
     residentials: residentialSlice,
-    maintenance: maintenanceSlice,
+    maintenances: maintenanceSlice,
     tickets: ticketSlice,
     categories: categorySlice,
-    
+
   },
 });

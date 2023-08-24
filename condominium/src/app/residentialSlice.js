@@ -79,6 +79,7 @@ const residentialsSlice = createSlice({
         state.actual = "";
       })
       .addCase(fetchResidentials.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.residentialsArray = action.payload;
       })
       .addCase(deleteResidential.fulfilled, (state, action) => {

@@ -240,7 +240,7 @@ export default function EnhancedTable({ options, series }) {
   return (
     <Box
       sx={{
-        minWidth: "100%",
+        width: "100%",
         bgcolor: "#FFF",
         borderRadius: 2,
         border: "2px dashed rgba(145, 158, 171, 0.24)",

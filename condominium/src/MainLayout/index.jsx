@@ -11,23 +11,6 @@ const Main = styled("main")({
   backgroundColor: "#EDE7F6",
   padding: 16,
   flexGrow: 1,
-  //#region breakpoints
-  // [theme.breakpoints.up("md")]: {
-  //   marginLeft: open ? 0 : -(drawerWidth - 20),
-  //   width: `calc(100% - ${drawerWidth}px)`,
-  // },
-  // [theme.breakpoints.down("md")]: {
-  //   marginLeft: "20px",
-  //   width: `calc(100% - ${drawerWidth}px)`,
-  //   padding: "16px",
-  // },
-  // [theme.breakpoints.down("sm")]: {
-  //   marginLeft: "10px",
-  //   width: `calc(100% - ${drawerWidth}px)`,
-  //   padding: "16px",
-  //   marginRight: "10px",
-  // },
-  //#endregion
 });
 
 const MainLayout = () => {

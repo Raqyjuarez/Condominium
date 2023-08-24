@@ -37,7 +37,6 @@ export const fetchTickets = createAsyncThunk("tickets/fetchTickets", async () =>
     id: doc.id,
     ticket: doc.data(),
   }));
-  console.log(tickets);
   return tickets;
 });
 

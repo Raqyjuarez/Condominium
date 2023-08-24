@@ -1,30 +1,28 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchResidentials } from "../../app/residentialSlice";
+import { fetchMaintenances } from "../../app/maintenanceSlice";
 import EnhancedTable from "./index";
 import { Skeleton, TableCell } from "@mui/material";
 
-const ResidentialsTable = () => {
-  const series = useSelector((state) => state.residentials.residentialsArray);
+const MaintenanceTable = () => {
+  const series = useSelector((state) => state.maintenances.maintenancesArray);
   console.log(series);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchResidentials());
+    dispatch(fetchMaintenances());
   }, [dispatch]);
 
   const options = {
-    name: "Residentials",
-    headers: ["ID", "Owner ID", "Resident ID", "Address", "Residential Phone"],
+    name: "Maintenance",
+    headers: ["ID", "Users ID", "Category ID"],
   };
 
   const tableCells = (row) => {
     return (
       <>
         <TableCell>{row.id}</TableCell>
-        <TableCell>{row.residential.ownerId}</TableCell>
-        <TableCell>{row.residential.residentId}</TableCell>
-        <TableCell>{row.residential.address}</TableCell>
-        <TableCell>{row.residential.residentialPhone}</TableCell>
+        <TableCell>{row.maintenance.userId}</TableCell>
+        <TableCell>{row.maintenance.categoryId}</TableCell>
       </>
     );
   };
@@ -53,4 +51,4 @@ const ResidentialsTable = () => {
   );
 };
 
-export default ResidentialsTable;
+export default MaintenanceTable;

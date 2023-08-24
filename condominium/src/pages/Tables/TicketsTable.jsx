@@ -1,30 +1,38 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchResidentials } from "../../app/residentialSlice";
+import { fetchTickets } from "../../app/ticketSlice";
 import EnhancedTable from "./index";
 import { Skeleton, TableCell } from "@mui/material";
 
-const ResidentialsTable = () => {
-  const series = useSelector((state) => state.residentials.residentialsArray);
+const TicketsTable = () => {
+  const series = useSelector((state) => state.tickets.ticketsArray);
   console.log(series);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchResidentials());
+    dispatch(fetchTickets());
   }, [dispatch]);
 
   const options = {
-    name: "Residentials",
-    headers: ["ID", "Owner ID", "Resident ID", "Address", "Residential Phone"],
+    name: "Tickets",
+    headers: [
+      "ID",
+      "Title",
+      "Description",
+      "User ID",
+      "Category ID",
+      "Maintenance ID",
+    ],
   };
 
   const tableCells = (row) => {
     return (
       <>
         <TableCell>{row.id}</TableCell>
-        <TableCell>{row.residential.ownerId}</TableCell>
-        <TableCell>{row.residential.residentId}</TableCell>
-        <TableCell>{row.residential.address}</TableCell>
-        <TableCell>{row.residential.residentialPhone}</TableCell>
+        <TableCell>{row.ticket.title}</TableCell>
+        <TableCell>{row.ticket.description}</TableCell>
+        <TableCell>{row.ticket.userId}</TableCell>
+        <TableCell>{row.ticket.categoryId}</TableCell>
+        <TableCell>{row.ticket.maintenanceId}</TableCell>
       </>
     );
   };
@@ -53,4 +61,4 @@ const ResidentialsTable = () => {
   );
 };
 
-export default ResidentialsTable;
+export default TicketsTable;

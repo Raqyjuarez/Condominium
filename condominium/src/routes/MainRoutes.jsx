@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 import { fetchUsers } from "../app/userSlice.js";
 import UsersTable from "../pages/Tables/UsersTable";
 import ResidentialsTable from "../pages/Tables/ResidentialsTable";
+import TicketsTable from "../pages/Tables/TicketsTable.jsx";
+import MaintenanceTable from "../pages/Tables/MaintenanceTable.jsx";
+import CategoriesTable from "../pages/Tables/CategoriesTable.jsx";
 
 const headers = {
   users: {
@@ -133,13 +136,7 @@ const MainRoutes = {
       children: [
         {
           path: "/Tickets",
-          element: (
-            <EnhancedTable
-              key={headers.tickets.name}
-              options={headers.tickets}
-              series={data.tickets}
-            />
-          ),
+          element:   <TicketsTable />,
         },
         {
           path: "/Tickets/CU",
@@ -153,13 +150,7 @@ const MainRoutes = {
       children: [
         {
           path: "/Maintenance",
-          element: (
-            <EnhancedTable
-              key={headers.maintenance.name}
-              options={headers.maintenance}
-              series={data.maintenance}
-            />
-          ),
+          element: <MaintenanceTable />,
         },
         {
           path: "/Maintenance/CU",
@@ -172,13 +163,7 @@ const MainRoutes = {
       children: [
         {
           path: "/Categories",
-          element: (
-            <EnhancedTable
-              key={headers.categories.name}
-              options={headers.categories}
-              series={data.categories}
-            />
-          ),
+          element: <CategoriesTable />,
         },
         {
           path: "/Categories/CU",
