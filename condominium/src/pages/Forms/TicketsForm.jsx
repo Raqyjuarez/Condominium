@@ -8,72 +8,72 @@ const TicketsForm = () => {
   return (
     <>
       <TextField
-        key="IdTickets"
-        name="IdTickets"
+        key="idTickets"
+        name="idTickets"
         type="number"
         placeholder="ID"
-        error={!valid.tickets.IdTickets}
-        helperText={!valid.tickets.IdTickets && "Use only numbers!"}
+        error={!valid.tickets.idTickets}
+        helperText={!valid.tickets.idTickets && "Use only numbers!"}
         required
       />
       <TextField
-        key="Title"
-        name="Title"
+        key="title"
+        name="title"
         type="text"
         placeholder="Title"
-        error={!valid.tickets.Title}
+        error={!valid.tickets.title}
         helperText={
-          !valid.tickets.Title &&
+          !valid.tickets.title &&
           "Title should be 3-16 characters and shouldn't include any special character!"
         }
         required
       />
       <TextField
-        key="UserId"
-        name="UserId"
+        key="userId"
+        name="userId"
         type="text"
         placeholder="User ID"
-        error={!valid.tickets.UserId}
+        error={!valid.tickets.userId}
         helperText={
-          !valid.tickets.UserId &&
+          !valid.tickets.userId &&
           "Address should be 10-25 characters and shouldn't include any special character!"
         }
         required
       />
       <TextField
-        key="CategoryId"
-        name="CategoryId"
+        key="categoryId"
+        name="categoryId"
         type="number"
         placeholder="Category ID"
-        error={!valid.tickets.CategoryId}
-        helperText={!valid.tickets.CategoryId && "Only use numbers"}
+        error={!valid.tickets.categoryId}
+        helperText={!valid.tickets.categoryId && "Only use numbers"}
         required
       />
       <TextField
-        key="Priority"
-        name="Priority"
+        key="priority"
+        name="priority"
         type="number"
         placeholder="Priority"
-        error={!valid.tickets.Priority}
-        helperText={!valid.tickets.Priority && "Only use numbers"}
+        error={!valid.tickets.priority}
+        helperText={!valid.tickets.priority && "Only use numbers"}
         required
       />
       <TextField
-        key="MaintenanceId"
-        name="MaintenanceId"
+        key="maintenanceId"
+        name="maintenanceId"
         type="number"
         placeholder="Maintenance ID"
-        error={!valid.tickets.MaintenanceId}
-        helperText={!valid.tickets.MaintenanceId && "Only use numbers"}
+        error={!valid.tickets.maintenanceId}
+        helperText={!valid.tickets.maintenanceId && "Only use numbers"}
         required
       />
       <TextField
-        key="Description"
-        name="Description"
+        key="description"
+        name="description"
         type="text"
         placeholder="Description"
-        error={!valid.tickets.Description}
-        helperText={!valid.tickets.Description && "Use 250 words or more"}
+        error={!valid.tickets.description}
+        helperText={!valid.tickets.description && "Use 250 words or more"}
         required
       />
       <Button variant="contained" size="large">

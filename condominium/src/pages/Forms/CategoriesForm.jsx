@@ -8,21 +8,21 @@ const CategoriesForm = () => {
   return (
     <>
       <TextField
-        key="IdCategories"
-        name="IdCategories"
+        key="idCategories"
+        name="idCategories"
         type="number"
         placeholder="ID"
-        error={!valid.categories.IdCategories}
-        helperText={!valid.categories.IdCategories && "Use only numbers"}
+        error={!valid.categories.idCategories}
+        helperText={!valid.categories.idCategories && "Use only numbers"}
         required
       />
       <TextField
-        key="Category"
-        name="Category"
+        key="category"
+        name="category"
         type="text"
         placeholder="Category"
-        error={!valid.categories.Category}
-        helperText={!valid.categories.Category && 
+        error={!valid.categories.category}
+        helperText={!valid.categories.category && 
           "Category should be 3-10 characters and shouldn't include any special character!"}
         required
       />

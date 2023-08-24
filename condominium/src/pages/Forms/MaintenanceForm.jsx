@@ -8,40 +8,40 @@ const MaintenanceForm = () => {
   return (
     <>
       <TextField
-         key="IdMaintenance"
-         name="IdMaintenance"
+         key="idMaintenance"
+         name="idMaintenance"
          type="number"
          placeholder="ID"
-         error={!valid.maintenance.IdMaintenance}
-         helperText={!valid.maintenance.IdMaintenance && "Use only numbers"}
+         error={!valid.maintenance.idMaintenance}
+         helperText={!valid.maintenance.idMaintenance && "Use only numbers"}
          required
       />
       <TextField
-        key="Maintenance"
-        name="Maintenance"
+        key="maintenance"
+        name="aintenance"
         type="text"
         placeholder="Maintenance"
-        error={!valid.maintenance.Maintenance}
-        helperText={!valid.maintenance.Maintenance && 
+        error={!valid.maintenance.maintenance}
+        helperText={!valid.maintenance.maintenance && 
           "Maintenance should be 3-16 characters and shouldn't include any special character!"}
         required
       />
       <TextField
-        key="AbilityId"
-        name="AbilityId"
+        key="abilityId"
+        name="abilityId"
         type="number"
         placeholder="Ability ID"
-        error={!valid.maintenance.AbilityId}
-        helperText={!valid.maintenance.AbilityId && "Use only numbers"}
+        error={!valid.maintenance.abilityId}
+        helperText={!valid.maintenance.abilityId && "Use only numbers"}
         required
       />
       <TextField
-        key="Ability"
-        name="Ability"
+        key="ability"
+        name="ability"
         type="text"
         placeholder="Ability"
-        error={!valid.maintenance.Ability}
-        helperText={!valid.maintenance.Ability && "Write the Ability needed without special characters"}
+        error={!valid.maintenance.ability}
+        helperText={!valid.maintenance.ability && "Write the Ability needed without special characters"}
         required
       />
       <Button variant="contained" size="large">

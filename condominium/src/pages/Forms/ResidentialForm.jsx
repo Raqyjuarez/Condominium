@@ -8,8 +8,8 @@ const ResidentialForm = () => {
   return (
     <>
       <TextField
-        key="Owner"
-        name="Owner"
+        key="ownerId"
+        name="ownerId"
         type="text"
         placeholder="Owner"
         error={!valid.residentials.ownerId}
@@ -19,8 +19,8 @@ const ResidentialForm = () => {
         }
       />
       <TextField
-        key="Resident"
-        name="Resident"
+        key="residentId"
+        name="residentId"
         type="text"
         placeholder="Resident"
         error={!valid.residentials.residentId}
@@ -31,8 +31,8 @@ const ResidentialForm = () => {
         required
       />
       <TextField
-        key="Address"
-        name="Address"
+        key="address"
+        name="address"
         type="type"
         placeholder="Address"
         error={!valid.residentials.address}
@@ -43,8 +43,8 @@ const ResidentialForm = () => {
         required
       />
       <TextField
-        key="ResidentialPhone"
-        name="ResidentialPhone"
+        key="residentialPhone"
+        name="residentialPhone"
         type="number"
         placeholder="Phone Number"
         error={!valid.residentials.residentialPhone}

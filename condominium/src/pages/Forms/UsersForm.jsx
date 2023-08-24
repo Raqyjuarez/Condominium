@@ -9,13 +9,13 @@ const UsersForm = () => {
   return (
     <>
       <TextField
-        key="Name"
-        name="Name"
+        key="name"
+        name="name"
         type="text"
         placeholder="Name"
-        error={!valid.users.Name}
+        error={!valid.users.name}
         helperText={
-          !valid.users.Name &&
+          !valid.users.name &&
           "Name should be 3-16 characters and shouldn't include any special character!"
         }
       />
@@ -32,30 +32,30 @@ const UsersForm = () => {
         required
       />
       <TextField
-        key="Email"
-        name="Email"
+        key="email"
+        name="email"
         type="email"
         placeholder="Email"
-        error={!valid.users.Email}
-        helperText={!valid.users.Email && "The email must be valid"}
+        error={!valid.users.email}
+        helperText={!valid.users.email && "The email must be valid"}
         required
       />
       <TextField
-        key="UserPhone"
-        name="UserPhone"
+        key="userPhone"
+        name="userPhone"
         type="number"
         placeholder="Phone Number"
-        error={!valid.users.UserPhone}
-        helperText={!valid.users.UserPhone && "Only use numbers"}
+        error={!valid.users.userPhone}
+        helperText={!valid.users.userPhone && "Only use numbers"}
         required
       />
       <TextField
-        key="UserRole"
-        name="UserRole"
+        key="userRole"
+        name="userRole"
         type="text"
         placeholder="Add User Role"
-        error={!valid.users.UserRole}
-        helperText={!valid.users.UserRole && "User Role must exist"}
+        error={!valid.users.userRole}
+        helperText={!valid.users.userRole && "User Role must exist"}
         required
       />
       <Button variant="contained" size="large">
