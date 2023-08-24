@@ -12,9 +12,9 @@ const ResidentialForm = () => {
         name="Owner"
         type="text"
         placeholder="Owner"
-        error={!valid.residentials.Owner}
+        error={!valid.residentials.ownerId}
         helperText={
-          !valid.residentials.Owner &&
+          !valid.residentials.ownerId &&
           "Owner should be 3-16 characters and shouldn't include any special character!"
         }
       />
@@ -23,9 +23,9 @@ const ResidentialForm = () => {
         name="Resident"
         type="text"
         placeholder="Resident"
-        error={!valid.residentials.Resident}
+        error={!valid.residentials.residentId}
         helperText={
-          !valid.residentials.Resident &&
+          !valid.residentials.residentId &&
           "Resident should be 3-16 characters and shouldn't include any special character!"
         }
         required
@@ -35,9 +35,9 @@ const ResidentialForm = () => {
         name="Address"
         type="type"
         placeholder="Address"
-        error={!valid.residentials.Address}
+        error={!valid.residentials.address}
         helperText={
-          !valid.residentials.Address &&
+          !valid.residentials.address &&
           "Address should be 10-25 characters and shouldn't include any special character!"
         }
         required
@@ -47,8 +47,8 @@ const ResidentialForm = () => {
         name="ResidentialPhone"
         type="number"
         placeholder="Phone Number"
-        error={!valid.residentials.ResidentialPhone}
-        helperText={!valid.residentials.ResidentialPhone && "Only use numbers"}
+        error={!valid.residentials.residentialPhone}
+        helperText={!valid.residentials.residentialPhone && "Only use numbers"}
         required
       />
       <Button variant="contained" size="large">

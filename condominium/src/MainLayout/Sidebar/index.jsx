@@ -9,7 +9,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle } from "../../app/drawerSlice";
 import NavItem from "./NavItem";
-import { Logout } from "./Logout";
+//import { Logout } from "./Logout";
 
 const Sidebar = () => {
   const drawerOpened = useSelector((state) => state.drawer.opened);
@@ -38,7 +38,7 @@ const Sidebar = () => {
           <NavItem key={item.label} item={item} />
         ))}
       </List>
-      <Logout />
+      {/* <Logout /> */}
     </StyledBox>
   );
 };

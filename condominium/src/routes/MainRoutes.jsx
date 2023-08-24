@@ -3,6 +3,9 @@ import MainLayout from "../MainLayout";
 import Forms from "../pages/Forms";
 import Tickets from "../pages/Tickets";
 import Dashboard from "../pages/Dashboard/index.jsx";
+import { useSelector } from "react-redux";
+import { fetchUsers } from "../app/userSlice.js";
+import UsersTable from "../pages/Tables/UsersTable.jsx";
 
 const headers = {
   users: {
@@ -37,7 +40,7 @@ const headers = {
 const data = {
   users: [
     {
-      id: 1,
+      id: '3ra7dCgpNpJeZutrE9Gs',
       name: "Pedro",
       lastname: "Gutierres Vargas",
       email: "pvargas@gmail.com",
@@ -45,7 +48,7 @@ const data = {
       phone: "12345678",
     },
     {
-      id: 2,
+      id: 'J08hWWMxyo6keHAztTv8',
       name: "Juan",
       lastname: "Villegas Martinez",
       email: "jmartinez@gmail.com",
@@ -90,6 +93,11 @@ const data = {
   ],
 };
 
+const handleUsers = () => {
+  const usersArray = useSelector(state => state.users.usersArray)
+  return [ usersArray, fetchUsers ]
+};
+
 const MainRoutes = {
   path: "/",
   element: <MainLayout />,
@@ -103,13 +111,7 @@ const MainRoutes = {
       children: [
         {
           path: "/Users",
-          element: (
-            <EnhancedTable
-              key={headers.users.name}
-              options={headers.users}
-              series={data.users}
-            />
-          ),
+          element: <UsersTable />,
         },
         {
           path: "/Users/CU",

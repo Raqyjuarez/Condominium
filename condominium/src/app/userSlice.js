@@ -37,7 +37,6 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
     id: doc.id,
     user: doc.data(),
   }));
-  console.log(users);
   return users;
 });
 

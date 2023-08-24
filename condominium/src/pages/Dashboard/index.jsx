@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import Greetings from "./Greetings";
 import SlimCard from "./SlimCard";
 

@@ -12,15 +12,15 @@ import db from "../config/firebase";
 const residential = {
   OwnerId: "",
   ResidentId: "",
-  Address: "",
-  Phone: "",
+  address: "",
+  residentialPhone: "",
 };
 
 const valid = {
   OwnerId: true,
   ResidentId: true,
-  Address: true,
-  Phone: true,
+  address: true,
+  residentialPhone: true,
 };
 
 export const addResidential = createAsyncThunk("residentials/addResidential", async (residential) => {

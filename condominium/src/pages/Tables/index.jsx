@@ -21,7 +21,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -119,7 +118,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar({ numSelected, options, resetOrder }) {
+function EnhancedTableToolbar({ numSelected, resetOrder, options }) {
   return (
     <Toolbar
       sx={{
@@ -171,9 +170,8 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({ options, series }) {
-
-
+const EnhancedTable = ({ options, tableCells, series }) => {
+    console.log(series);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
   const [selected, setSelected] = React.useState([]);
@@ -249,19 +247,19 @@ export default function EnhancedTable({ options, series }) {
     >
       <EnhancedTableToolbar
         numSelected={selected.length}
-        options={options}
         resetOrder={setOrderBy}
+        options={options}
       />
       <TableContainer>
         <Table stickyHeader>
           <EnhancedTableHead
-            options={options}
             numSelected={selected.length}
             order={order}
             orderBy={orderBy}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={series.length}
+            options={options}
           />
           <TableBody>
             {visibleRows.map((row, index) => {
@@ -288,9 +286,7 @@ export default function EnhancedTable({ options, series }) {
                       }}
                     />
                   </TableCell>
-                  {Object.keys(row).map((key) => (
-                    <TableCell key={key}>{row[key]}</TableCell>
-                  ))}
+                  {tableCells(row)}
                 </TableRow>
               );
             })}
@@ -317,4 +313,6 @@ export default function EnhancedTable({ options, series }) {
       />
     </Box>
   );
-}
+};
+
+export default EnhancedTable;
