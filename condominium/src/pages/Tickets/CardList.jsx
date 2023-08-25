@@ -1,11 +1,23 @@
+import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import TicketCard from "./TicketCard";
 
 const CardList = ({ title, data }) => {
+  let backgroundColor;
+
+  if (title === "Pending") {
+    backgroundColor = "#fadff2";
+  } else if (title === "In review") {
+    backgroundColor = "#FFFFE0"; 
+  } else if (title === "Fixed") {
+    backgroundColor = "#e5f8e2"; 
+  }
+
+
   return (
     <Box
       sx={{
-        bgcolor: "#FFF",
+        backgroundColor,
         borderRadius: 2,
         padding: 2,
         width: "100%",
@@ -23,10 +35,6 @@ const CardList = ({ title, data }) => {
         {data.map((card) => (
           <Grid key={card.id} item xs={12}>
             <TicketCard card={card}/>
-            {/* <Box sx={{ bgcolor: "#D1C4E9", padding: 1, borderRadius: 2 }}>
-              {" "}
-              <Typography variant="h6">{card.title}</Typography>
-            </Box> */}
           </Grid>
         ))}
       </Grid>
