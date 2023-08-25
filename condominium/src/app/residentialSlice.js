@@ -23,31 +23,43 @@ const valid = {
   residentialPhone: true,
 };
 
-export const addResidential = createAsyncThunk("residentials/addResidential", async (residential) => {
-  const addResidentialRef = await addDoc(collection(db, "Residentials"), residential);
-  const newResidential = { id: addResidentialRef.id, residential };
-  return newResidential;
-});
-
-export const fetchResidentials = createAsyncThunk("residentials/fetchResidentials", async () => {
-  const querySnapshot = await getDocs(collection(db, "Residentials"));
-  const residentials = querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    residential: doc.data(),
-  }));
-  console.log(residentials);
-  return residentials;
-});
-
-export const deleteResidential = createAsyncThunk("residentials/deleteResidential", async (id) => {
-  const residentials = await getDocs(collection(db, "Residentials"));
-  for (var snap of residentials.docs) {
-    if (snap.id === id) {
-      await deleteDoc(doc(db, "Residentials", snap.id));
-    }
+export const addResidential = createAsyncThunk(
+  "residentials/addResidential",
+  async (residential) => {
+    const addResidentialRef = await addDoc(
+      collection(db, "Residentials"),
+      residential
+    );
+    const newResidential = { id: addResidentialRef.id, residential };
+    return newResidential;
   }
-  return id;
-});
+);
+
+export const fetchResidentials = createAsyncThunk(
+  "residentials/fetchResidentials",
+  async () => {
+    const querySnapshot = await getDocs(collection(db, "Residentials"));
+    const residentials = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      residential: doc.data(),
+    }));
+    console.log(residentials);
+    return residentials;
+  }
+);
+
+export const deleteResidential = createAsyncThunk(
+  "residentials/deleteResidential",
+  async (id) => {
+    const residentials = await getDocs(collection(db, "Residentials"));
+    for (var snap of residentials.docs) {
+      if (snap.id === id) {
+        await deleteDoc(doc(db, "Residentials", snap.id));
+      }
+    }
+    return id;
+  }
+);
 
 export const updateResidential = createAsyncThunk(
   "residentials/updateResidential",
@@ -71,7 +83,12 @@ const residentialsSlice = createSlice({
     valid,
     residentialsArray: [],
   },
-  reducers: {},
+  reducers: {
+    setValidations: (state, action) => {
+      const { name, value } = action.payload;
+      state.residential[name] = value;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addResidential.fulfilled, (state, action) => {
@@ -79,7 +96,7 @@ const residentialsSlice = createSlice({
         state.actual = "";
       })
       .addCase(fetchResidentials.fulfilled, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
         state.residentialsArray = action.payload;
       })
       .addCase(deleteResidential.fulfilled, (state, action) => {
@@ -89,7 +106,9 @@ const residentialsSlice = createSlice({
       })
       .addCase(updateResidential.fulfilled, (state, action) => {
         const { id, residential } = action.payload;
-        const residentialIndex = state.residentialsArray.findIndex((residential) => residential.id === id);
+        const residentialIndex = state.residentialsArray.findIndex(
+          (residential) => residential.id === id
+        );
         if (residentialIndex !== -1) {
           state.residentialsArray[residentialIndex] = { id: id, residential };
         }
@@ -97,4 +116,5 @@ const residentialsSlice = createSlice({
   },
 });
 
+export const { setValidations } = residentialsSlice.actions;
 export default residentialsSlice.reducer;

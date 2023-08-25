@@ -72,7 +72,12 @@ const usersSlice = createSlice({
     valid,
     usersArray: [],
   },
-  reducers: {},
+  reducers: {
+    setValidations: (state, action) => {
+      const { name, value } = action.payload;
+      state.user[name] = value;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addUser.fulfilled, (state, action) => {
@@ -97,4 +102,5 @@ const usersSlice = createSlice({
   },
 });
 
+export const { setValidations } = usersSlice.actions;
 export default usersSlice.reducer;

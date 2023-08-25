@@ -19,31 +19,43 @@ const valid = {
   categoryId: true,
 };
 
-export const addMaintenance = createAsyncThunk("maintenances/addMaintenance", async (maintenance) => {
-  const addMaintenanceRef = await addDoc(collection(db, "Maintenances"), maintenance);
-  const newMaintenance = { id: addMaintenanceRef.id, maintenance };
-  return newMaintenance;
-});
-
-export const fetchMaintenances = createAsyncThunk("maintenances/fetchMaintenances", async () => {
-  const querySnapshot = await getDocs(collection(db, "Maintenances"));
-  const maintenances = querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    maintenance: doc.data(),
-  }));
-  console.log(maintenances);
-  return maintenances;
-});
-
-export const deleteMaintenance = createAsyncThunk("maintenances/deleteMaintenance", async (id) => {
-  const maintenances = await getDocs(collection(db, "Maintenances"));
-  for (var snap of maintenances.docs) {
-    if (snap.id === id) {
-      await deleteDoc(doc(db, "Maintenances", snap.id));
-    }
+export const addMaintenance = createAsyncThunk(
+  "maintenances/addMaintenance",
+  async (maintenance) => {
+    const addMaintenanceRef = await addDoc(
+      collection(db, "Maintenances"),
+      maintenance
+    );
+    const newMaintenance = { id: addMaintenanceRef.id, maintenance };
+    return newMaintenance;
   }
-  return id;
-});
+);
+
+export const fetchMaintenances = createAsyncThunk(
+  "maintenances/fetchMaintenances",
+  async () => {
+    const querySnapshot = await getDocs(collection(db, "Maintenances"));
+    const maintenances = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      maintenance: doc.data(),
+    }));
+    console.log(maintenances);
+    return maintenances;
+  }
+);
+
+export const deleteMaintenance = createAsyncThunk(
+  "maintenances/deleteMaintenance",
+  async (id) => {
+    const maintenances = await getDocs(collection(db, "Maintenances"));
+    for (var snap of maintenances.docs) {
+      if (snap.id === id) {
+        await deleteDoc(doc(db, "Maintenances", snap.id));
+      }
+    }
+    return id;
+  }
+);
 
 export const updateMaintenance = createAsyncThunk(
   "maintenances/updateMaintenance",
@@ -67,7 +79,12 @@ const maintenancesSlice = createSlice({
     valid,
     maintenancesArray: [],
   },
-  reducers: {},
+  reducers: {
+    setValidations: (state, action) => {
+      const { name, value } = action.payload;
+      state.maintenance[name] = value;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addMaintenance.fulfilled, (state, action) => {
@@ -84,7 +101,9 @@ const maintenancesSlice = createSlice({
       })
       .addCase(updateMaintenance.fulfilled, (state, action) => {
         const { id, maintenance } = action.payload;
-        const maintenanceIndex = state.maintenancesArray.findIndex((maintenance) => maintenance.id === id);
+        const maintenanceIndex = state.maintenancesArray.findIndex(
+          (maintenance) => maintenance.id === id
+        );
         if (maintenanceIndex !== -1) {
           state.maintenancesArray[maintenanceIndex] = { id: id, maintenance };
         }
@@ -92,4 +111,5 @@ const maintenancesSlice = createSlice({
   },
 });
 
+export const { setValidations } = maintenancesSlice.actions;
 export default maintenancesSlice.reducer;

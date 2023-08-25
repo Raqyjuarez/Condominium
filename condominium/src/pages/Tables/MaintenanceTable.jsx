@@ -5,7 +5,7 @@ import EnhancedTable from "./index";
 import { Skeleton, TableCell } from "@mui/material";
 
 const MaintenanceTable = () => {
-  const series = useSelector((state) => state.maintenances.maintenancesArray);
+  const series = useSelector((state) => state.maintenance.maintenancesArray);
   console.log(series);
   const dispatch = useDispatch();
   useEffect(() => {

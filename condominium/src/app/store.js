@@ -12,11 +12,11 @@ export const store = configureStore({
     drawer: drawerSlice,
     form: formSlice,
 
-    users: userSlice,
-    residentials: residentialSlice,
-    maintenances: maintenanceSlice,
-    tickets: ticketSlice,
-    categories: categorySlice,
+    user: userSlice,
+    residential: residentialSlice,
+    maintenance: maintenanceSlice,
+    ticket: ticketSlice,
+    category: categorySlice,
 
   },
 });

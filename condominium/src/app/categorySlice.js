@@ -10,13 +10,11 @@ import {
 import db from "../config/firebase";
 
 const category = {
-  userId: "",
-  categoryId: "",
+  value: "",
 };
 
 const valid = {
-  userId: true,
-  categoryId: true,
+  value: true,
 };
 
 export const addCategory = createAsyncThunk(
@@ -76,7 +74,12 @@ const categoriesSlice = createSlice({
     valid,
     categoriesArray: [],
   },
-  reducers: {},
+  reducers: {
+    setValidations: (state, action) => {
+      const { name, value } = action.payload;
+      state.category[name] = value;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addCategory.fulfilled, (state, action) => {
@@ -103,4 +106,5 @@ const categoriesSlice = createSlice({
   },
 });
 
+export const { setValidations } = categoriesSlice.actions;
 export default categoriesSlice.reducer;

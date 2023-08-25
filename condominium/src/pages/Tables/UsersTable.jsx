@@ -5,8 +5,7 @@ import EnhancedTable from "./index";
 import { Skeleton, TableCell } from "@mui/material";
 
 const UsersTable = () => {
-  const series = useSelector((state) => state.users.usersArray);
-  console.log(series);
+  const series = useSelector((state) => state.user.usersArray);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());

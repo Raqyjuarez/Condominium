@@ -72,7 +72,12 @@ const ticketsSlice = createSlice({
     valid,
     ticketsArray: [],
   },
-  reducers: {},
+  reducers: {
+    setValidations: (state, action) => {
+      const { name, value } = action.payload;
+      state.ticket[name] = value;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addTicket.fulfilled, (state, action) => {
@@ -97,4 +102,5 @@ const ticketsSlice = createSlice({
   },
 });
 
+export const { setValidations } = ticketsSlice.actions;
 export default ticketsSlice.reducer;

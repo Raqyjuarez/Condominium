@@ -171,7 +171,6 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const EnhancedTable = ({ options, tableCells, series }) => {
-    console.log(series);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
   const [selected, setSelected] = React.useState([]);

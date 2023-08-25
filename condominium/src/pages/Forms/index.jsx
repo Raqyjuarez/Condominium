@@ -6,7 +6,6 @@ import MaintenanceForm from "./MaintenanceForm";
 import CategoriesForm from "./CategoriesForm";
 const Forms = ({ formId }) => {
   let selectedForm;
-  console.log(formId);
 
   switch (formId) {
     case 1:
@@ -31,27 +30,18 @@ const Forms = ({ formId }) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-        width: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: "75%",
+        bgcolor: "#FFF",
+        padding: 4,
+        gap: 2,
+        borderRadius: 2,
+        border: "2px dashed rgba(145, 158, 171, 0.24)",
+        overflow: "hidden",
       }}
     >
-      <Paper
-        component="form"
-        elevation={2}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          padding: 4,
-          gap: 2,
-          width: "75%",
-          borderRadius: 2,
-        }}
-      >
-        {selectedForm}
-      </Paper>
+      {selectedForm}
     </Box>
   );
 };

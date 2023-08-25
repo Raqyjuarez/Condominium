@@ -1,21 +1,40 @@
-import { TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import Forms from "./index";
+import { NavLink } from "react-router-dom";
+import { getSelector, handleAdd, handleInputChange } from "./helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 const UsersForm = () => {
-  const valid = useSelector((state) => state.form.valid);
+  const { values, valid, actual } = getSelector("user");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    handleInputChange(e, 'user', dispatch);
+  }
+
+  const handleAddTo = () => {
+    handleAdd(1, values, actual, dispatch, navigate);
+  };
 
   return (
     <>
+      <Box sx={{ display: "flex", justifyContent: "space-between", }}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>Agregar usuario</Typography>
+        <Button variant="outlined" component={NavLink} to="/Users">
+          Regresar
+        </Button>
+      </Box>
       <TextField
         key="name"
         name="name"
         type="text"
         placeholder="Name"
-        error={!valid.users.name}
+        value={values.name}
+        onChange={handleChange}
+        error={!valid.name}
         helperText={
-          !valid.users.name &&
+          !valid.name &&
           "Name should be 3-16 characters and shouldn't include any special character!"
         }
       />
@@ -23,10 +42,12 @@ const UsersForm = () => {
         key="lastname"
         name="lastname"
         type="text"
-        placeholder="lastname"
-        error={!valid.users.lastname}
+        placeholder="Lastname"
+        value={values.lastname}
+        onChange={handleChange}
+        error={!valid.lastname}
         helperText={
-          !valid.users.lastname &&
+          !valid.lastname &&
           "Resident should be 3-16 characters and shouldn't include any special character!"
         }
         required
@@ -36,8 +57,10 @@ const UsersForm = () => {
         name="email"
         type="email"
         placeholder="Email"
-        error={!valid.users.email}
-        helperText={!valid.users.email && "The email must be valid"}
+        value={values.email}
+        onChange={handleChange}
+        error={!valid.email}
+        helperText={!valid.email && "The email must be valid"}
         required
       />
       <TextField
@@ -45,20 +68,24 @@ const UsersForm = () => {
         name="userPhone"
         type="number"
         placeholder="Phone Number"
-        error={!valid.users.userPhone}
-        helperText={!valid.users.userPhone && "Only use numbers"}
+        value={values.userPhone}
+        onChange={handleChange}
+        error={!valid.userPhone}
+        helperText={!valid.userPhone && "Only use numbers"}
         required
       />
       <TextField
         key="userRole"
         name="userRole"
         type="text"
-        placeholder="Add User Role"
-        error={!valid.users.userRole}
-        helperText={!valid.users.userRole && "User Role must exist"}
+        placeholder="User Role"
+        value={values.userRole}
+        onChange={handleChange}
+        error={!valid.userRole}
+        helperText={!valid.userRole && "User Role must exist"}
         required
       />
-      <Button variant="contained" size="large">
+      <Button variant="contained" size="large" onClick={handleAddTo}>
         Add User
       </Button>
     </>

@@ -5,7 +5,7 @@ import EnhancedTable from "./index";
 import { Skeleton, TableCell } from "@mui/material";
 
 const CategoriesTable = () => {
-  const series = useSelector((state) => state.categories.categoriesArray);
+  const series = useSelector((state) => state.category.categoriesArray);
   console.log(series);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -21,7 +21,7 @@ const CategoriesTable = () => {
     return (
       <>
         <TableCell>{row.id}</TableCell>
-        <TableCell>{row.category.category}</TableCell>
+        <TableCell>{row.category.value}</TableCell>
       </>
     );
   };
