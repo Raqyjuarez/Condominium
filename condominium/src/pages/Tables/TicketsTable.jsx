@@ -29,6 +29,7 @@ const TicketsTable = () => {
       "User ID",
       "Category ID",
       "Maintenance ID",
+      "Status"
     ],
   };
 
@@ -41,6 +42,7 @@ const TicketsTable = () => {
         <TableCell>{row.ticket.userId}</TableCell>
         <TableCell>{row.ticket.categoryId}</TableCell>
         <TableCell>{row.ticket.maintenanceId}</TableCell>
+        <TableCell>{row.ticket.status}</TableCell>
       </>
     );
   };

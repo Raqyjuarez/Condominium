@@ -59,6 +59,7 @@ const values = {
     userId: "",
     categoryId: "",
     maintenanceId: "",
+    status: ''
   },
   category: {
     value: "",

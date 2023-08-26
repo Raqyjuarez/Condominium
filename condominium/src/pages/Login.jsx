@@ -53,7 +53,7 @@ export default function Login() {
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <TextField
-            label="Correo electrónico"
+            label="Nombre de usuario"
             variant="outlined"
             fullWidth
             margin="normal"

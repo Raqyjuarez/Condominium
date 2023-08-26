@@ -60,19 +60,10 @@ const MyTickets = () => {
 
 
   const getCards = (status) => {
-    const filtered = data.filter((card) => {
-      if (card.ticket.userId === actual) {
-        if (status === "Pending") {
-          return card.ticket.status === status;
-        } else if (status === "In review") {
-          return card.ticket.status === status;
-        } else if (status === "Fixed") {
-          return card.ticket.status === status;
-        }
-      }
-      return true;
-    });
-    return filtered;
+    return data.filter(
+      (ticket) =>
+        ticket.ticket.userId === actual && ticket.ticket.status === status
+    );
   };
   
 

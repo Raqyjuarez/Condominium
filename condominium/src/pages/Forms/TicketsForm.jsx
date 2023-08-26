@@ -5,6 +5,7 @@ import { handleInputChange } from "../Tables/HelperFunctions";
 import { useNavigate } from "react-router-dom";
 import { clean } from "@app/formSlice";
 import { handleAction } from "../Tables/HelperFunctions";
+
 const TicketsForm = () => {
  const { values, actual, valids } = useSelector(state => state.form);
  const LoggedId = useSelector(state => state.actual.value.id);
@@ -19,7 +20,6 @@ const TicketsForm = () => {
 
   const handleAdd = () => {
     const current = ({...ticket, userId: LoggedId });
-    console.log(current);
     handleAction(3, { value: 'add', document: current, actual: actual, navigate }, dispatch);
   };
 
@@ -63,20 +63,6 @@ const TicketsForm = () => {
         helperText={!valid.description && "Use 250 words or more"}
         required
       />
-      {/* <TextField
-        key="userId"
-        name="userId"
-        type="text"
-        placeholder="User ID"
-        value={ticket.userId}
-        onChange={handleChange}
-        error={!valid.userId}
-        helperText={
-          !valid.userId &&
-          "User ID should be 10-25 characters and shouldn't include any special character!"
-        }
-        required
-      /> */}
       <TextField
         key="categoryId"
         name="categoryId"
@@ -103,8 +89,8 @@ const TicketsForm = () => {
         key="status"
         name="status"
         type="text"
-        placeholder="status"
-        value={ticket.staus}
+        placeholder="Status"
+        value={ticket.status}
         onChange={handleChange}
         error={!valid.status}
         helperText={!valid.status && "Select an status!"}
