@@ -1,9 +1,4 @@
-import React, { useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { auth } from "../config/Auth-firebase";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,34 +9,26 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useAuth } from "../config/AuthCheck";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../app/userSlice";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const logData = useSelector((state) => state.user.usersArray);
+  const navigate =useNavigate();
 
-  const user = useAuth();
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
-  const logIn = async () => {
-    try {
-      const user = await signInWithEmailAndPassword(auth, email, pass);
-      console.log(user);
-      navigate("/home");
-    } catch (error) {
-      console.log(error.message);
-      alert("Credenciales incorrectas, intentelo nuevamente");
-      navigate("/Login");
-    }
-  };
-
-  const resetPass = async () => {
-    try {
-      await sendPasswordResetEmail(auth, email);
-      console.log("Correo electrónico de recuperación de contraseña enviado");
-    } catch (error) {
-      alert("Antes de darle click en el boton, ingrese su correo.");
-      console.log(error.message);
+  const handleSignIn = () => {
+    const foundUser = logData.find((userData) => userData.user.user === user && userData.user.pass === pass);
+    if (foundUser) {
+      navigate("/");
+    } else {
+     alert("Credenciales incorrectas");
     }
   };
 
@@ -72,8 +59,8 @@ export default function Login() {
             variant="outlined"
             fullWidth
             margin="normal"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
           />
           <TextField
             label="Contraseña"
@@ -87,27 +74,13 @@ export default function Login() {
 
           <Button
             type="button"
-            onClick={logIn}
+            onClick={handleSignIn}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
             Sign In
           </Button>
-
-          <Link
-            component="button"
-            variant="body2"
-            onClick={resetPass}
-            sx={{
-              mt: 1,
-              mb: 2,
-              textDecoration: "underline",
-              cursor: "pointer",
-            }}
-          >
-            Olvidó la contraseña?
-          </Link>
         </Box>
       </Box>
     </Container>
