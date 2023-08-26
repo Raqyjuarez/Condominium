@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, fetchUsers } from "@app/userSlice";
 import EnhancedTable from "./index";
-import { Skeleton, TableCell, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import {
+  TableCell,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { handleAction } from "./HelperFunctions";
 
 const UsersTable = () => {
-  const series = useSelector((state) => state.user.usersArray);
-  const actual = useSelector(state => state.form.actual);
+  const actual = useSelector((state) => state.form.actual);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch, open]);
 
   const handleDelete = () => {
-    handleAction(1, { value: 'delete', document: actual }, dispatch)
+    handleAction(1, { value: "delete", document: actual }, dispatch);
     setOpen(false);
   };
 
@@ -37,44 +38,25 @@ const UsersTable = () => {
     );
   };
 
-  if (series.length === 0) {
-    return (
-      <>
-        <Skeleton
-          variant="rounded"
-          animation="wave"
-          width="100%"
-          height={256}
-        />
-      </>
-    );
-  }
-
   return (
-    series && (
-      <>
-        <EnhancedTable
-          options={options}
-          tableCells={tableCells}
-          dispatch={dispatch}
-          setOpen={setOpen}
-          series={series}
-        />
-        <Dialog open={open} onClose={() => setOpen(false)}>
-          <DialogTitle>¿Want to delete this document?</DialogTitle>
-          <DialogActions>
-            <Button onClick={() => handleDelete()}>Delete</Button>
-            <Button
-              variant="contained"
-              onClick={() => setOpen(false)}
-              autoFocus
-            >
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </>
-    )
+    <>
+      <EnhancedTable
+        tableId={1}
+        options={options}
+        tableCells={tableCells}
+        dispatch={dispatch}
+        setOpen={setOpen}
+      />
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>¿Want to delete this user?</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => handleDelete()}>Delete</Button>
+          <Button variant="contained" onClick={() => setOpen(false)} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

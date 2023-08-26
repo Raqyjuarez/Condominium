@@ -7,6 +7,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@app": "/src/app",
+      '@tables': '/src/pages/Tables'
     },
   },
 });

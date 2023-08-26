@@ -204,13 +204,12 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const EnhancedTable = ({ options, tableCells, setOpen }) => {
+const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
   const dispatch = useDispatch();
-  const fetch = handleAction(1, { value: "fetch" });
+  const fetch = handleAction(tableId, { value: "fetch" });
 
-  const id = 1;
   let data;
-  switch (id) {
+  switch (tableId) {
     case 1:
       data = useSelector((state) => state.user.usersArray);
       break;

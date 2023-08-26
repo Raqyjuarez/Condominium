@@ -10,26 +10,27 @@ import {
 } from "@mui/material";
 import { handleAction } from "./HelperFunctions";
 
-const CategoriesTable = () => {
+const MaintenancesTable = () => {
   const actual = useSelector((state) => state.form.actual);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    handleAction(5, { value: "delete", document: actual }, dispatch);
+    handleAction(4, { value: "delete", document: actual }, dispatch);
     setOpen(false);
   };
 
   const options = {
-    name: "Categories",
-    headers: ["ID", "Category"],
+    name: "Maintenance",
+    headers: ["ID", "Users ID", "Category ID"],
   };
 
   const tableCells = (row) => {
     return (
       <>
         <TableCell>{row.id}</TableCell>
-        <TableCell>{row.category.value}</TableCell>
+        <TableCell>{row.maintenance.userId}</TableCell>
+        <TableCell>{row.maintenance.categoryId}</TableCell>
       </>
     );
   };
@@ -37,14 +38,14 @@ const CategoriesTable = () => {
   return (
     <>
       <EnhancedTable
-        tableId={5}
+        tableId={4}
         options={options}
         tableCells={tableCells}
         dispatch={dispatch}
         setOpen={setOpen}
       />
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>¿Want to delete this category?</DialogTitle>
+        <DialogTitle>¿Want to delete this maintenance?</DialogTitle>
         <DialogActions>
           <Button onClick={() => handleDelete()}>Delete</Button>
           <Button variant="contained" onClick={() => setOpen(false)} autoFocus>
@@ -56,4 +57,4 @@ const CategoriesTable = () => {
   );
 };
 
-export default CategoriesTable;
+export default MaintenancesTable;

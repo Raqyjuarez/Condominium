@@ -1,16 +1,24 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTickets } from "../../app/ticketSlice";
 import EnhancedTable from "./index";
-import { Skeleton, TableCell } from "@mui/material";
+import {
+  TableCell,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
+} from "@mui/material";
+import { handleAction } from "./HelperFunctions";
 
 const TicketsTable = () => {
-  const series = useSelector((state) => state.ticket.ticketsArray);
-  console.log(series);
+  const actual = useSelector((state) => state.form.actual);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchTickets());
-  }, [dispatch]);
+
+  const handleDelete = () => {
+    handleAction(3, { value: "delete", document: actual }, dispatch);
+    setOpen(false);
+  };
 
   const options = {
     name: "Tickets",
@@ -37,27 +45,25 @@ const TicketsTable = () => {
     );
   };
 
-  if (series.length === 0) {
-    return (
-      <>
-        <Skeleton
-          variant="rounded"
-          animation="wave"
-          width="100%"
-          height={256}
-        />
-      </>
-    );
-  }
-
   return (
-    series && (
+    <>
       <EnhancedTable
+        tableId={3}
         options={options}
         tableCells={tableCells}
-        series={series}
+        dispatch={dispatch}
+        setOpen={setOpen}
       />
-    )
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>¿Want to delete this Ticket?</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => handleDelete()}>Delete</Button>
+          <Button variant="contained" onClick={() => setOpen(false)} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

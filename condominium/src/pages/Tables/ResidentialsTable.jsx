@@ -1,15 +1,24 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchResidentials } from "../../app/residentialSlice";
 import EnhancedTable from "./index";
-import { Skeleton, TableCell } from "@mui/material";
+import {
+  TableCell,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
+} from "@mui/material";
+import { handleAction } from "./HelperFunctions";
 
-const ResidentialsTable = ({ Toolbar }) => {
-  const data = useSelector((state) => state.residential.residentialsArray);
+const ResidentialsTable = () => {
+  const actual = useSelector((state) => state.form.actual);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchResidentials());
-  }, [dispatch]);
+
+  const handleDelete = () => {
+    handleAction(2, { value: "delete", document: actual }, dispatch);
+    setOpen(false);
+  };
 
   const options = {
     name: "Residentials",
@@ -28,93 +37,25 @@ const ResidentialsTable = ({ Toolbar }) => {
     );
   };
 
-  if (data.length === 0) {
-    return (
-      <>
-        <Skeleton
-          variant="rounded"
-          animation="wave"
-          width="100%"
-          height={256}
-        />
-      </>
-    );
-  }
-
   return (
-    data && (
-      <>
-        <Toolbar
-          numSelected={selected.length}
-          resetOrder={setOrderBy}
-          options={options}
-          dispatch={dispatch}
-          setOpen={setOpen}
-          selected={selected}
-        />
-        <TableContainer>
-          <Table stickyHeader>
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={data.length}
-              options={options}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row);
-                const labelId = `chkbox-${index}`;
-
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    {tableCells(row)}
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 65 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </>
-    )
+    <>
+      <EnhancedTable
+        tableId={2}
+        options={options}
+        tableCells={tableCells}
+        dispatch={dispatch}
+        setOpen={setOpen}
+      />
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>¿Want to delete this residential?</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => handleDelete()}>Delete</Button>
+          <Button variant="contained" onClick={() => setOpen(false)} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
