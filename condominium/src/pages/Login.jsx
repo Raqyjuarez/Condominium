@@ -24,7 +24,7 @@ export default function Login() {
   }, [dispatch]);
 
   const handleSignIn = () => {
-    const foundUser = logData.find((userData) => userData.user.user === user && userData.user.pass === pass);
+    const foundUser = logData.find((userData) => userData.user.username === user && userData.user.password === pass);
     if (foundUser) {
       navigate("/");
     } else {

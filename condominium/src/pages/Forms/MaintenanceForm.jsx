@@ -1,28 +1,61 @@
-import { TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { handleInputChange } from "../Tables/HelperFunctions";
+import { useNavigate } from "react-router-dom";
+import { clean } from "@app/formSlice";
+import { handleAction } from "../Tables/HelperFunctions";
 
 const MaintenanceForm = () => {
-  const valid = useSelector((state) => state.form.valid);
+const { values, actual, valids } = useSelector(state => state.form);
+  const maintenance = values.maintenance;
+  const valid = valids.maintenance;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    handleInputChange(e, "maintenance", dispatch);
+  };
+
+  const handleAdd = () => {
+    handleAction(4, { value: 'add', document: maintenance, actual: actual, navigate }, dispatch);
+  };
 
   return (
     <>
+     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          {actual === "" ? "Add" : "Update"} maintenance
+        </Typography>
+        <Button
+          variant="outlined"
+          component={NavLink}
+          to="/Users"
+          onClick={() => dispatch(clean())}
+        >
+          Regresar
+        </Button>
+      </Box>
       <TextField
          key="idMaintenance"
          name="idMaintenance"
          type="number"
          placeholder="ID"
-         error={!valid.maintenance.idMaintenance}
-         helperText={!valid.maintenance.idMaintenance && "Use only numbers"}
+          value={maintenance.idMaintenance}
+        onChange={handleChange}
+         error={!valid.idMaintenance}
+         helperText={!valid.idMaintenance && "Use only numbers"}
          required
       />
       <TextField
         key="maintenance"
-        name="aintenance"
+        name="maintenance"
         type="text"
         placeholder="Maintenance"
-        error={!valid.maintenance.maintenance}
-        helperText={!valid.maintenance.maintenance && 
+         value={maintenance.maintenance}
+        onChange={handleChange}
+        error={!valid.maintenance}
+        helperText={!valid.maintenance && 
           "Maintenance should be 3-16 characters and shouldn't include any special character!"}
         required
       />
@@ -31,8 +64,10 @@ const MaintenanceForm = () => {
         name="abilityId"
         type="number"
         placeholder="Ability ID"
-        error={!valid.maintenance.abilityId}
-        helperText={!valid.maintenance.abilityId && "Use only numbers"}
+         value={maintenance.abilityId}
+        onChange={handleChange}
+        error={!valid.abilityId}
+        helperText={!valid.abilityId && "Use only numbers"}
         required
       />
       <TextField
@@ -40,12 +75,14 @@ const MaintenanceForm = () => {
         name="ability"
         type="text"
         placeholder="Ability"
-        error={!valid.maintenance.ability}
-        helperText={!valid.maintenance.ability && "Write the Ability needed without special characters"}
+        value={maintenance.ability}
+        onChange={handleChange}
+        error={!valid.ability}
+        helperText={!valid.ability && "Write the Ability needed without special characters"}
         required
       />
-      <Button variant="contained" size="large">
-        Add Maintenance
+    <Button variant="contained" size="large" onClick={handleAdd}>
+        {actual === "" ? "Add" : "Update"} Maintenance
       </Button>
     </>
   );

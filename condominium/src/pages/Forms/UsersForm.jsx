@@ -37,6 +37,32 @@ const UsersForm = () => {
         </Button>
       </Box>
       <TextField
+        key="username"
+        name="username"
+        type="text"
+        placeholder="Name"
+        value={user.username}
+        onChange={handleChange}
+        error={!valid.username}
+        helperText={
+          !valid.username &&
+          "Name should be 3-16 characters and shouldn't include any special character!"
+        }
+      />
+         <TextField
+        key="password"
+        name="password"
+        type="text"
+        placeholder="Name"
+        value={user.password}
+        onChange={handleChange}
+        error={!valid.password}
+        helperText={
+          !valid.password &&
+          "Name should be 3-16 characters and shouldn't include any special character!"
+        }
+      />
+      <TextField
         key="name"
         name="name"
         type="text"
