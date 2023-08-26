@@ -15,7 +15,6 @@ export default function Login() {
   const [pass, setPass] = useState("");
   const dispatch = useDispatch();
   const logData = useSelector((state) => state.user.usersArray);
-  console.log(logData)
   const navigate = useNavigate();
 
   useEffect(() => {

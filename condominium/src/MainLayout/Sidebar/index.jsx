@@ -13,6 +13,7 @@ import NavItem from "./NavItem";
 
 const Sidebar = () => {
   const drawerOpened = useSelector((state) => state.drawer.opened);
+  const role = useSelector((state) => state.actual.value.user.userRole);
   const dispatch = useDispatch();
   const drawerWidth = {
     closed: 72,
@@ -34,9 +35,18 @@ const Sidebar = () => {
         <LogoSection opened={drawerOpened} toggle={handleDrawerState} />
       </Box>
       <List disablePadding>
-        {linksArray.map((item) => (
-          <NavItem key={item.label} item={item} />
-        ))}
+        {role === "Admin" ? (
+          linksArray.map((item) => <NavItem key={item.label} item={item} />)
+        ) : (
+          <NavItem
+            key="myTickets"
+            item={{
+              label: "MyTickets",
+              icon: <GroupIcon />,
+              path: "/MyTickets",
+            }}
+          />
+        )}
       </List>
       {/* <Logout /> */}
     </StyledBox>
@@ -55,16 +65,14 @@ const StyledBox = styled(Box, {
     width: drawer.opened,
     minWidth: drawer.opened,
     alignItems: "normal",
-    transition:
-      "width 0.275s ease-out, min-width 0.275s ease-out",
+    transition: "width 0.275s ease-out, min-width 0.275s ease-out",
   },
 
   "&.closed": {
     width: drawer.closed,
     minWidth: drawer.closed,
     alignItems: "center",
-    transition:
-      "width 0.175s linear, min-width 0.175s linear",
+    transition: "width 0.175s linear, min-width 0.175s linear",
   },
 }));
 

@@ -20,10 +20,10 @@ export default function Dashboard() {
           lg={4}
         >
           <Grid item xs={12} sm={6} md={6} lg={12}>
-            <SlimCard type="value" value={120} />
+            <SlimCard type="value" value={123} />
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={12}>
-            <SlimCard type="amount" value={120} />
+            <SlimCard type="amount" value={321} />
           </Grid>
         </Grid>
       </Grid>
