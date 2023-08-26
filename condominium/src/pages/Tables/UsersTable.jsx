@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogActions,
   Button,
+  Tab,
 } from "@mui/material";
 import { handleAction } from "./HelperFunctions";
 
@@ -22,13 +23,14 @@ const UsersTable = () => {
 
   const options = {
     name: "user",
-    headers: ["ID", "Name", "Lastname", "Email", "Rol", "Phone"],
+    headers: ["ID", "Username", "Name", "Lastname", "Email", "Rol", "Phone"],
   };
 
   const tableCells = (row) => {
     return (
       <>
         <TableCell>{row.id}</TableCell>
+        <TableCell>{row.user.username}</TableCell>
         <TableCell>{row.user.name}</TableCell>
         <TableCell>{row.user.lastname}</TableCell>
         <TableCell>{row.user.email}</TableCell>

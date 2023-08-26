@@ -10,6 +10,8 @@ import {
 import db from "../config/firebase";
 
 const user = {
+  username: '',
+  password: '',
   name: "",
   lastname: "",
   email: "",
@@ -18,6 +20,8 @@ const user = {
 };
 
 const valid = {
+  username: true,
+  password: true,
   name: true,
   lastname: true,
   email: true,
