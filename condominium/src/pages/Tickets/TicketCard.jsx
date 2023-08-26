@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Divider, Icon } from "@mui/material";
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 
 const TicketCard = ({ card }) => {
-  const { title, description, status } = card;
+  const { title, description, status } = card.ticket;
 
   return (
     <Card
