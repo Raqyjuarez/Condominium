@@ -10,7 +10,7 @@ import ResidentialsTable from "../pages/Tables/ResidentialsTable";
 import TicketsTable from "../pages/Tables/TicketsTable.jsx";
 import MaintenanceTable from "../pages/Tables/MaintenanceTable.jsx";
 import CategoriesTable from "../pages/Tables/CategoriesTable.jsx";
-import Login
+import Login from '../pages/Login'
 import TestTable from "../pages/Tables/TestTable.jsx";
 
 const headers = {
