@@ -10,6 +10,7 @@ import ResidentialsTable from "../pages/Tables/ResidentialsTable";
 import TicketsTable from "../pages/Tables/TicketsTable.jsx";
 import MaintenanceTable from "../pages/Tables/MaintenanceTable.jsx";
 import CategoriesTable from "../pages/Tables/CategoriesTable.jsx";
+import TestTable from "../pages/Tables/TestTable.jsx";
 
 const headers = {
   users: {
@@ -123,7 +124,7 @@ const MainRoutes = {
       children: [
         {
           path: "/Residentials",
-          element: <ResidentialsTable />,
+          element: <TestTable />,
         },
         {
           path: "/Residentials/CU",

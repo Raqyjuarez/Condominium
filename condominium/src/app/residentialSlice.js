@@ -43,7 +43,6 @@ export const fetchResidentials = createAsyncThunk(
       id: doc.id,
       residential: doc.data(),
     }));
-    console.log(residentials);
     return residentials;
   }
 );
@@ -84,9 +83,17 @@ const residentialsSlice = createSlice({
     residentialsArray: [],
   },
   reducers: {
+    setValues: (state, action) => {
+      const { name, value } = action.payload;
+      state.residential[name] = value;
+    },
     setValidations: (state, action) => {
       const { name, value } = action.payload;
       state.residential[name] = value;
+    },
+    setResidential: (state, action) => {
+      state.residential = action.payload.residential;
+      state.actual = action.payload.id;
     },
   },
   extraReducers: (builder) => {
@@ -116,5 +123,5 @@ const residentialsSlice = createSlice({
   },
 });
 
-export const { setValidations } = residentialsSlice.actions;
+export const { setValues, setValidations, setResidential } = residentialsSlice.actions;
 export default residentialsSlice.reducer;

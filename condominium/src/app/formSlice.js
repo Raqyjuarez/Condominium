@@ -79,10 +79,12 @@ export const formSlice = createSlice({
     },
     setActual: (state, action) => {
       const { target, fields, id } = action.payload;
+      // console.log(target, fields, id);
       state.values[target] = fields;
       state.actual = id;
     },
     clean: (state) => {
+      state.values = values;
       state.actual = '';
     }
   },

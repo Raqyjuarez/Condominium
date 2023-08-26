@@ -1,18 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../app/userSlice";
+import { deleteUser, fetchUsers } from "@app/userSlice";
 import EnhancedTable from "./index";
-import { Skeleton, TableCell } from "@mui/material";
+import { Skeleton, TableCell, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import { handleAction } from "./HelperFunctions";
 
 const UsersTable = () => {
   const series = useSelector((state) => state.user.usersArray);
+  const actual = useSelector(state => state.form.actual);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());
-  }, [dispatch]);
+  }, [dispatch, open]);
+
+  const handleDelete = () => {
+    handleAction(1, { value: 'delete', document: actual }, dispatch)
+    setOpen(false);
+  };
 
   const options = {
-    name: "Users",
+    name: "user",
     headers: ["ID", "Name", "Lastname", "Email", "Rol", "Phone"],
   };
 
@@ -44,11 +52,28 @@ const UsersTable = () => {
 
   return (
     series && (
-      <EnhancedTable
-        options={options}
-        tableCells={tableCells}
-        series={series}
-      />
+      <>
+        <EnhancedTable
+          options={options}
+          tableCells={tableCells}
+          dispatch={dispatch}
+          setOpen={setOpen}
+          series={series}
+        />
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogTitle>¿Want to delete this document?</DialogTitle>
+          <DialogActions>
+            <Button onClick={() => handleDelete()}>Delete</Button>
+            <Button
+              variant="contained"
+              onClick={() => setOpen(false)}
+              autoFocus
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
     )
   );
 };

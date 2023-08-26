@@ -22,6 +22,15 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { NavLink } from "react-router-dom";
 
+import { setActual, clean } from "@app/formSlice";
+import { deleteUser } from "@app/userSlice";
+import { deleteResidential } from "@app/residentialSlice";
+import { deleteTicket } from "@app/ticketSlice";
+import { deleteMaintenance } from "@app/maintenanceSlice";
+import { deleteCategory } from "@app/categorySlice";
+import { getTarget, handleAction, handleDelete } from "./HelperFunctions";
+import { useDispatch, useSelector } from "react-redux";
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -118,7 +127,24 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar({ numSelected, resetOrder, options }) {
+function EnhancedTableToolbar({
+  numSelected,
+  resetOrder,
+  options,
+  dispatch,
+  setOpen,
+  selected,
+  setSelected
+}) {
+  const handleDelete = () => {
+    setOpen(true);
+    setSelected([]);
+  };
+
+  const handleUpdate = () => {
+    handleAction(1, { value: "set", document: selected[0] }, dispatch);
+  };
+
   return (
     <Toolbar
       sx={{
@@ -132,26 +158,34 @@ function EnhancedTableToolbar({ numSelected, resetOrder, options }) {
       }}
     >
       {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="subtitle1"
-          component="div"
-          color="inherit"
-        >
-          {numSelected} selected
-        </Typography>
+        numSelected === 1 ? (
+          <Button
+            variant="outlined"
+            sx={{ bgcolor: "#FFF", "&:hover": { bgcolor: "#D9D9D9" } }}
+            onClick={() => handleUpdate()}
+            component={NavLink}
+            to="CU"
+          >
+            Update {options.name}
+          </Button>
+        ) : (
+          <Typography
+            sx={{ flex: "1 1 100%" }}
+            variant="subtitle1"
+            component="div"
+            color="inherit"
+          >
+            {numSelected} selected
+          </Typography>
+        )
       ) : (
-        <Button
-          variant="outlined"
-          component={NavLink}
-          to={`/${options.name}/CU`}
-        >
+        <Button variant="outlined" component={NavLink} to="CU">
           Add new {options.name}
         </Button>
       )}
-      {numSelected > 0 ? (
+      {numSelected === 1 ? (
         <Tooltip title="Delete">
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={() => handleDelete()}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -170,7 +204,33 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const EnhancedTable = ({ options, tableCells, series }) => {
+const EnhancedTable = ({ options, tableCells, setOpen }) => {
+  const dispatch = useDispatch();
+  const fetch = handleAction(1, { value: "fetch" });
+
+  const id = 1;
+  let data;
+  switch (id) {
+    case 1:
+      data = useSelector((state) => state.user.usersArray);
+      break;
+    case 2:
+      data = useSelector((state) => state.residential.residentialsArray);
+      break;
+    case 3:
+      data = useSelector((state) => state.ticket.ticketsArray);
+      break;
+    case 4:
+      data = useSelector((state) => state.maintenance.maintenancesArray);
+      break;
+    case 5:
+      data = useSelector((state) => state.category.categoriesArray);
+  }
+
+  React.useEffect(() => {
+    dispatch(fetch());
+  }, [dispatch]);
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
   const [selected, setSelected] = React.useState([]);
@@ -185,15 +245,16 @@ const EnhancedTable = ({ options, tableCells, series }) => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = series.map((n) => n.id);
-      setSelected(newSelected);
+      setSelected(data);
       return;
     }
     setSelected([]);
+    dispatch(clean());
   };
 
   const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+    const selectedId = name.id;
+    const selectedIndex = selected.findIndex((item) => item.id === selectedId);
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -209,6 +270,11 @@ const EnhancedTable = ({ options, tableCells, series }) => {
       );
     }
     setSelected(newSelected);
+
+    if (newSelected.length === 1) {
+      handleAction(1, { value: "set", document: newSelected[0] }, dispatch);
+    } else dispatch(clean());
+    console.log(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -220,18 +286,19 @@ const EnhancedTable = ({ options, tableCells, series }) => {
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (row) =>
+    selected.some((selectedRow) => selectedRow.id === row.id);
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - series.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(series, getComparator(order, orderBy)).slice(
+      stableSort(data, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [data, order, orderBy, page, rowsPerPage]
   );
 
   return (
@@ -248,6 +315,10 @@ const EnhancedTable = ({ options, tableCells, series }) => {
         numSelected={selected.length}
         resetOrder={setOrderBy}
         options={options}
+        dispatch={dispatch}
+        setOpen={setOpen}
+        selected={selected}
+        setSelected={setSelected}
       />
       <TableContainer>
         <Table stickyHeader>
@@ -257,18 +328,18 @@ const EnhancedTable = ({ options, tableCells, series }) => {
             orderBy={orderBy}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
-            rowCount={series.length}
+            rowCount={data.length}
             options={options}
           />
           <TableBody>
             {visibleRows.map((row, index) => {
-              const isItemSelected = isSelected(row.id);
+              const isItemSelected = isSelected(row);
               const labelId = `chkbox-${index}`;
 
               return (
                 <TableRow
                   hover
-                  onClick={(event) => handleClick(event, row.id)}
+                  onClick={(event) => handleClick(event, row)}
                   role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
@@ -304,7 +375,7 @@ const EnhancedTable = ({ options, tableCells, series }) => {
       <TablePagination
         rowsPerPageOptions={[]}
         component="div"
-        count={series.length}
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

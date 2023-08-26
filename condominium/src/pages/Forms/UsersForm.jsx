@@ -1,27 +1,38 @@
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { getSelector, handleAdd, handleInputChange } from "./helperFunctions";
+import { handleInputChange } from "../Tables/HelperFunctions";
 import { useNavigate } from "react-router-dom";
+import { clean } from "@app/formSlice";
+import { handleAction } from "../Tables/HelperFunctions";
 
 const UsersForm = () => {
-  const { values, valid, actual } = getSelector("user");
+  const { values, actual, valids } = useSelector(state => state.form);
+  const user = values.user;
+  const valid = valids.user;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    handleInputChange(e, 'user', dispatch);
-  }
+    handleInputChange(e, "user", dispatch);
+  };
 
-  const handleAddTo = () => {
-    handleAdd(1, values, actual, dispatch, navigate);
+  const handleAdd = () => {
+    handleAction(1, { value: 'add', document: user, actual: actual, navigate }, dispatch);
   };
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "space-between", }}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>Agregar usuario</Typography>
-        <Button variant="outlined" component={NavLink} to="/Users">
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          {actual === "" ? "Add" : "Update"} user
+        </Typography>
+        <Button
+          variant="outlined"
+          component={NavLink}
+          to="/Users"
+          onClick={() => dispatch(clean())}
+        >
           Regresar
         </Button>
       </Box>
@@ -30,7 +41,7 @@ const UsersForm = () => {
         name="name"
         type="text"
         placeholder="Name"
-        value={values.name}
+        value={user.name}
         onChange={handleChange}
         error={!valid.name}
         helperText={
@@ -43,7 +54,7 @@ const UsersForm = () => {
         name="lastname"
         type="text"
         placeholder="Lastname"
-        value={values.lastname}
+        value={user.lastname}
         onChange={handleChange}
         error={!valid.lastname}
         helperText={
@@ -57,7 +68,7 @@ const UsersForm = () => {
         name="email"
         type="email"
         placeholder="Email"
-        value={values.email}
+        value={user.email}
         onChange={handleChange}
         error={!valid.email}
         helperText={!valid.email && "The email must be valid"}
@@ -68,7 +79,7 @@ const UsersForm = () => {
         name="userPhone"
         type="number"
         placeholder="Phone Number"
-        value={values.userPhone}
+        value={user.userPhone}
         onChange={handleChange}
         error={!valid.userPhone}
         helperText={!valid.userPhone && "Only use numbers"}
@@ -79,14 +90,14 @@ const UsersForm = () => {
         name="userRole"
         type="text"
         placeholder="User Role"
-        value={values.userRole}
+        value={user.userRole}
         onChange={handleChange}
         error={!valid.userRole}
         helperText={!valid.userRole && "User Role must exist"}
         required
       />
-      <Button variant="contained" size="large" onClick={handleAddTo}>
-        Add User
+      <Button variant="contained" size="large" onClick={handleAdd}>
+        {actual === "" ? "Add" : "Update"} User
       </Button>
     </>
   );

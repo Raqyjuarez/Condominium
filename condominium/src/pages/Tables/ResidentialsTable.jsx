@@ -4,9 +4,8 @@ import { fetchResidentials } from "../../app/residentialSlice";
 import EnhancedTable from "./index";
 import { Skeleton, TableCell } from "@mui/material";
 
-const ResidentialsTable = () => {
-  const series = useSelector((state) => state.residential.residentialsArray);
-  console.log(series);
+const ResidentialsTable = ({ Toolbar }) => {
+  const data = useSelector((state) => state.residential.residentialsArray);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchResidentials());
@@ -29,7 +28,7 @@ const ResidentialsTable = () => {
     );
   };
 
-  if (series.length === 0) {
+  if (data.length === 0) {
     return (
       <>
         <Skeleton
@@ -43,12 +42,78 @@ const ResidentialsTable = () => {
   }
 
   return (
-    series && (
-      <EnhancedTable
-        options={options}
-        tableCells={tableCells}
-        series={series}
-      />
+    data && (
+      <>
+        <Toolbar
+          numSelected={selected.length}
+          resetOrder={setOrderBy}
+          options={options}
+          dispatch={dispatch}
+          setOpen={setOpen}
+          selected={selected}
+        />
+        <TableContainer>
+          <Table stickyHeader>
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={data.length}
+              options={options}
+            />
+            <TableBody>
+              {visibleRows.map((row, index) => {
+                const isItemSelected = isSelected(row);
+                const labelId = `chkbox-${index}`;
+
+                return (
+                  <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, row)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
+                    sx={{ cursor: "pointer" }}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={isItemSelected}
+                        inputProps={{
+                          "aria-labelledby": labelId,
+                        }}
+                      />
+                    </TableCell>
+                    {tableCells(row)}
+                  </TableRow>
+                );
+              })}
+              {emptyRows > 0 && (
+                <TableRow
+                  style={{
+                    height: 65 * emptyRows,
+                  }}
+                >
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[]}
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </>
     )
   );
 };

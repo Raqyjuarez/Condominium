@@ -82,7 +82,6 @@ const usersSlice = createSlice({
     builder
       .addCase(addUser.fulfilled, (state, action) => {
         state.usersArray.push(action.payload);
-        state.actual = "";
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.usersArray = action.payload;
