@@ -2,22 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../app/userSlice";
+import { allowAccess, setActual } from "../app/actualSlice";
 
 export default function Login() {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const dispatch = useDispatch();
   const logData = useSelector((state) => state.user.usersArray);
-  const navigate =useNavigate();
+  console.log(logData)
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -25,26 +24,27 @@ export default function Login() {
 
   const handleSignIn = () => {
     const foundUser = logData.find((userData) => userData.user.username === user && userData.user.password === pass);
+    console.log(foundUser);
     if (foundUser) {
-      navigate("/");
+      dispatch(setActual(foundUser));
+      dispatch(allowAccess());
+      navigate("/Home");
     } else {
      alert("Credenciales incorrectas");
     }
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-      sx={{ display: "flex", alignItems: "center" }}
-    >
-      <CssBaseline />
+    <Box
+      sx={{ display: "flex", alignItems: "center", justifyContent: 'center', width: '100%', height: '100vh', bgcolor: '#EDE7F6' }}>
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          bgcolor: '#FFF',
+          padding: 4,
+          borderRadius: 2,
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -83,6 +83,6 @@ export default function Login() {
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 }

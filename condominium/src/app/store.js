@@ -6,11 +6,13 @@ import residentialSlice from "./residentialSlice";
 import maintenanceSlice from "./maintenanceSlice";
 import ticketSlice from "./ticketSlice";
 import categorySlice from "./categorySlice";
+import actualSlice from "./actualSlice";
 
 export const store = configureStore({
   reducer: {
     drawer: drawerSlice,
     form: formSlice,
+    actual: actualSlice,
 
     user: userSlice,
     residential: residentialSlice,
