@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const valids = {
   user: {
+    username: true,
+    password: true,
     name: true,
     lastname: true,
     email: true,
@@ -9,34 +11,32 @@ const valids = {
     userRole: true,
   },
   residential: {
-    owner: true,
-    resident: true,
+    ownerId: true,
+    residentId: true,
     address: true,
     residentialPhone: true,
   },
   ticket: {
-    idTickets: true,
     title: true,
+    description: true,
     userId: true,
     categoryId: true,
-    priority: true,
     maintenanceId: true,
-    description: true,
+    status: true,
   },
   maintenance: {
-    idMaintenance: true,
-    maintenance: true,
-    abilityId: true,
-    ability: true,
+    userId: true,
+    categoryId: true,
   },
   category: {
-    categoryId: true,
-    category: true,
+    value: true,
   },
 };
 
 const values = {
   user: {
+    username: '',
+    password: '',
     name: "",
     lastname: "",
     email: "",

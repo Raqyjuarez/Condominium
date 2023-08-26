@@ -7,6 +7,7 @@ import { clean } from "@app/formSlice";
 import { handleAction } from "../Tables/HelperFunctions";
 const TicketsForm = () => {
  const { values, actual, valids } = useSelector(state => state.form);
+ const LoggedId = useSelector(state => state.actual.value.id);
   const ticket = values.ticket;
   const valid = valids.ticket;
   const dispatch = useDispatch();
@@ -17,7 +18,9 @@ const TicketsForm = () => {
   };
 
   const handleAdd = () => {
-    handleAction(3, { value: 'add', document: ticket, actual: actual, navigate }, dispatch);
+    const current = ({...ticket, userId: LoggedId });
+    console.log(current);
+    handleAction(3, { value: 'add', document: current, actual: actual, navigate }, dispatch);
   };
 
   return (
@@ -36,17 +39,6 @@ const TicketsForm = () => {
         </Button>
       </Box>
       <TextField
-        key="idTickets"
-        name="idTickets"
-        type="number"
-        placeholder="ID"
-        value= {ticket.idTickets}
-        onChange={handleChange}
-        error={!valid.idTickets}
-        helperText={!valid.idTickets && "Use only numbers!"}
-        required
-      />
-      <TextField
         key="title"
         name="title"
         type="text"
@@ -61,6 +53,17 @@ const TicketsForm = () => {
         required
       />
       <TextField
+        key="description"
+        name="description"
+        type="text"
+        placeholder="Description"
+        value={ticket.description}
+        onChange={handleChange}
+        error={!valid.description}
+        helperText={!valid.description && "Use 250 words or more"}
+        required
+      />
+      {/* <TextField
         key="userId"
         name="userId"
         type="text"
@@ -70,14 +73,14 @@ const TicketsForm = () => {
         error={!valid.userId}
         helperText={
           !valid.userId &&
-          "Address should be 10-25 characters and shouldn't include any special character!"
+          "User ID should be 10-25 characters and shouldn't include any special character!"
         }
         required
-      />
+      /> */}
       <TextField
         key="categoryId"
         name="categoryId"
-        type="number"
+        type="text"
         placeholder="Category ID"
         value={ticket.categoryId}
         onChange={handleChange}
@@ -86,20 +89,9 @@ const TicketsForm = () => {
         required
       />
       <TextField
-        key="priority"
-        name="priority"
-        type="number"
-        placeholder="Priority"
-        value={ticket.priority}
-        onChange={handleChange}
-        error={!valid.priority}
-        helperText={!valid.priority && "Only use numbers"}
-        required
-      />
-      <TextField
         key="maintenanceId"
         name="maintenanceId"
-        type="number"
+        type="text"
         placeholder="Maintenance ID"
         value={ticket.maintenanceId}
         onChange={handleChange}
@@ -107,15 +99,15 @@ const TicketsForm = () => {
         helperText={!valid.maintenanceId && "Only use numbers"}
         required
       />
-      <TextField
-        key="description"
-        name="description"
+            <TextField
+        key="status"
+        name="status"
         type="text"
-        placeholder="Description"
-        value={ticket.description}
+        placeholder="status"
+        value={ticket.staus}
         onChange={handleChange}
-        error={!valid.description}
-        helperText={!valid.tickets.description && "Use 250 words or more"}
+        error={!valid.status}
+        helperText={!valid.status && "Select an status!"}
         required
       />
 <Button variant="contained" size="large" onClick={handleAdd}>

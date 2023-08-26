@@ -40,7 +40,7 @@ const UsersForm = () => {
         key="username"
         name="username"
         type="text"
-        placeholder="Name"
+        placeholder="Username"
         value={user.username}
         onChange={handleChange}
         error={!valid.username}
@@ -52,8 +52,8 @@ const UsersForm = () => {
          <TextField
         key="password"
         name="password"
-        type="text"
-        placeholder="Name"
+        type="password"
+        placeholder="Password"
         value={user.password}
         onChange={handleChange}
         error={!valid.password}

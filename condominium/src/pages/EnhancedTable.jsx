@@ -21,10 +21,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { NavLink } from "react-router-dom";
-
-import { clean } from "@app/formSlice";
-import { handleAction } from "./HelperFunctions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -122,25 +119,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar({
-  numSelected,
-  resetOrder,
-  options,
-  dispatch,
-  setOpen,
-  selected,
-  setSelected,
-  tableId
-}) {
-  const handleDelete = () => {
-    setOpen(true);
-    setSelected([]);
-  };
-
-  const handleUpdate = () => {
-    handleAction(tableId, { value: "set", document: selected[0] }, dispatch);
-  };
-
+function EnhancedTableToolbar({ numSelected, options, resetOrder }) {
   return (
     <Toolbar
       sx={{
@@ -154,34 +133,26 @@ function EnhancedTableToolbar({
       }}
     >
       {numSelected > 0 ? (
-        numSelected === 1 ? (
-          <Button
-            variant="outlined"
-            sx={{ bgcolor: "#FFF", "&:hover": { bgcolor: "#D9D9D9" } }}
-            onClick={() => handleUpdate()}
-            component={NavLink}
-            to="CU"
-          >
-            Update {options.name}
-          </Button>
-        ) : (
-          <Typography
-            sx={{ flex: "1 1 100%" }}
-            variant="subtitle1"
-            component="div"
-            color="inherit"
-          >
-            {numSelected} selected
-          </Typography>
-        )
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="subtitle1"
+          component="div"
+          color="inherit"
+        >
+          {numSelected} selected
+        </Typography>
       ) : (
-        <Button variant="outlined" component={NavLink} to="CU">
+        <Button
+          variant="outlined"
+          component={NavLink}
+          to={`/${options.name}/CU`}
+        >
           Add new {options.name}
         </Button>
       )}
-      {numSelected === 1 ? (
+      {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton color="inherit" onClick={() => handleDelete()}>
+          <IconButton color="inherit">
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -200,31 +171,8 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
-  const dispatch = useDispatch();
-  const fetch = handleAction(tableId, { value: "fetch" });
+export default function EnhancedTable({ options, series }) {
 
-  let data;
-  switch (tableId) {
-    case 1:
-      data = useSelector((state) => state.user.usersArray);
-      break;
-    case 2:
-      data = useSelector((state) => state.residential.residentialsArray);
-      break;
-    case 3:
-      data = useSelector((state) => state.ticket.ticketsArray);
-      break;
-    case 4:
-      data = useSelector((state) => state.maintenance.maintenancesArray);
-      break;
-    case 5:
-      data = useSelector((state) => state.category.categoriesArray);
-  }
-
-  React.useEffect(() => {
-    dispatch(fetch());
-  }, [dispatch]);
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
@@ -240,16 +188,15 @@ const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      setSelected(data);
+      const newSelected = series.map((n) => n.id);
+      setSelected(newSelected);
       return;
     }
     setSelected([]);
-    dispatch(clean());
   };
 
   const handleClick = (event, name) => {
-    const selectedId = name.id;
-    const selectedIndex = selected.findIndex((item) => item.id === selectedId);
+    const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -265,10 +212,6 @@ const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
       );
     }
     setSelected(newSelected);
-
-    if (newSelected.length === 1) {
-      handleAction(tableId, { value: "set", document: newSelected[0] }, dispatch);
-    } else dispatch(clean());
   };
 
   const handleChangePage = (event, newPage) => {
@@ -280,25 +223,24 @@ const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
     setPage(0);
   };
 
-  const isSelected = (row) =>
-    selected.some((selectedRow) => selectedRow.id === row.id);
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - series.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(data, getComparator(order, orderBy)).slice(
+      stableSort(series, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [data, order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rowsPerPage]
   );
 
   return (
     <Box
       sx={{
-        minWidth: "100%",
+        width: "100%",
         bgcolor: "#FFF",
         borderRadius: 2,
         border: "2px dashed rgba(145, 158, 171, 0.24)",
@@ -307,34 +249,29 @@ const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
     >
       <EnhancedTableToolbar
         numSelected={selected.length}
-        resetOrder={setOrderBy}
         options={options}
-        dispatch={dispatch}
-        setOpen={setOpen}
-        selected={selected}
-        setSelected={setSelected}
-        tableId={tableId}
+        resetOrder={setOrderBy}
       />
       <TableContainer>
         <Table stickyHeader>
           <EnhancedTableHead
+            options={options}
             numSelected={selected.length}
             order={order}
             orderBy={orderBy}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
-            rowCount={data.length}
-            options={options}
+            rowCount={series.length}
           />
           <TableBody>
             {visibleRows.map((row, index) => {
-              const isItemSelected = isSelected(row);
+              const isItemSelected = isSelected(row.id);
               const labelId = `chkbox-${index}`;
 
               return (
                 <TableRow
                   hover
-                  onClick={(event) => handleClick(event, row)}
+                  onClick={(event) => handleClick(event, row.id)}
                   role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
@@ -351,7 +288,9 @@ const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
                       }}
                     />
                   </TableCell>
-                  {tableCells(row)}
+                  {Object.keys(row).map((key) => (
+                    <TableCell key={key}>{row[key]}</TableCell>
+                  ))}
                 </TableRow>
               );
             })}
@@ -370,7 +309,7 @@ const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
       <TablePagination
         rowsPerPageOptions={[]}
         component="div"
-        count={data.length}
+        count={series.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -378,6 +317,4 @@ const EnhancedTable = ({ tableId, options, tableCells, setOpen }) => {
       />
     </Box>
   );
-};
-
-export default EnhancedTable;
+}

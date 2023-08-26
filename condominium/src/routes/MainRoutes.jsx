@@ -57,27 +57,27 @@ const MainRoutes = {
       ],
     },
     {
-      path: "Maintenance",
+      path: "Maintenances",
       children: [
         {
-          path: "/Maintenance",
+          path: "/Maintenances",
           element: <MaintenancesTable />,
         },
         {
-          path: "/Maintenance/CU",
+          path: "/Maintenances/CU",
           element: <Forms formId={4} />,
         },
       ],
     },
     {
-      path: "Categories",
+      path: "Categorys",
       children: [
         {
-          path: "/Categories",
+          path: "/Categorys",
           element: <CategoriesTable />,
         },
         {
-          path: "/Categories/CU",
+          path: "/Categorys/CU",
           element: <Forms formId={5} />,
         },
       ],

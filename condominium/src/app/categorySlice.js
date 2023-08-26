@@ -9,14 +9,6 @@ import {
 } from "firebase/firestore";
 import db from "../config/firebase";
 
-const category = {
-  value: "",
-};
-
-const valid = {
-  value: true,
-};
-
 export const addCategory = createAsyncThunk(
   "categories/addCategory",
   async (category) => {
@@ -34,7 +26,6 @@ export const fetchCategories = createAsyncThunk(
       id: doc.id,
       category: doc.data(),
     }));
-    console.log(categories);
     return categories;
   }
 );
@@ -68,23 +59,12 @@ export const updateCategory = createAsyncThunk(
 
 const categoriesSlice = createSlice({
   name: "Categories",
-  initialState: {
-    actual: "",
-    category,
-    valid,
-    categoriesArray: [],
-  },
-  reducers: {
-    setValidations: (state, action) => {
-      const { name, value } = action.payload;
-      state.category[name] = value;
-    },
-  },
+  initialState: { categoriesArray: [] },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addCategory.fulfilled, (state, action) => {
         state.categoriesArray.push(action.payload);
-        state.actual = "";
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categoriesArray = action.payload;

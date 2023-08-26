@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import { addUser, updateUser, deleteUser, fetchUsers } from "@app/userSlice";
 import {
   addResidential,
@@ -25,44 +24,6 @@ import {
   fetchCategories,
 } from "@app/categorySlice";
 import { setValues, setValidations, setActual, clean } from "@app/formSlice";
-import { documentId } from "firebase/firestore";
-
-export const getTarget = (id) => {
-  let currentTarget;
-  switch (id) {
-    case 1:
-      currentTarget = {
-        fetch: fetchUsers,
-        data: useSelector((state) => state.user.usersArray),
-      };
-      break;
-    case 2:
-      currentTarget = {
-        fetch: fetchResidentials,
-        data: useSelector((state) => state.residential.residentialArray),
-      };
-      break;
-    case 3:
-      currentTarget = {
-        fetch: fetchTickets,
-        data: useSelector((state) => state.ticket.ticketsArray),
-      };
-      break;
-    case 4:
-      currentTarget = {
-        fetch: fetchMaintenances,
-        data: useSelector((state) => state.maintenance.maintenancesArray),
-      };
-      break;
-    case 5:
-      currentTarget = {
-        fetch: fetchCategories,
-        data: useSelector((state) => state.category.categoriesArray),
-      };
-      break;
-  }
-  return currentTarget;
-};
 
 export const handleDelete = (func, id, dispatch) => {
   dispatch(func(id));
@@ -70,6 +31,7 @@ export const handleDelete = (func, id, dispatch) => {
 
 export const handleInputChange = (e, target, dispatch) => {
   const { name, value } = e.target;
+  console.log(target, name, value);
   dispatch(setValues({ target, name, value }));
 };
 
@@ -81,6 +43,8 @@ const handleAdd = async (func, document, name, actual, navigate, dispatch) => {
         ? document[field].trim()
         : document[field];
     const isValid = value !== "";
+
+    console.log(name, field, isValid)
 
     dispatch(setValidations({ target: name, name: field, value: isValid }));
 
@@ -150,7 +114,7 @@ export const handleAction = (id, action, dispatch) => {
       break;
     case 5:
       currentTarget = {
-        name: "cateogory",
+        name: "category",
         fetch: fetchCategories,
         add: addCategory,
         update: updateCategory,

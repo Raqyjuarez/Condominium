@@ -23,7 +23,6 @@ export default function Login() {
 
   const handleSignIn = () => {
     const foundUser = logData.find((userData) => userData.user.username === user && userData.user.password === pass);
-    console.log(foundUser);
     if (foundUser) {
       dispatch(setActual(foundUser));
       dispatch(allowAccess());

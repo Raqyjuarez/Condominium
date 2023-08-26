@@ -1,29 +1,58 @@
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { handleInputChange } from "../Tables/HelperFunctions";
 import { useNavigate } from "react-router-dom";
 import { clean } from "@app/formSlice";
 import { handleAction } from "../Tables/HelperFunctions";
+import CustomSelect from "./CustomSelect";
 
 const MaintenanceForm = () => {
-const { values, actual, valids } = useSelector(state => state.form);
+  const { values, actual, valids } = useSelector((state) => state.form);
   const maintenance = values.maintenance;
   const valid = valids.maintenance;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [selectedValue1, setSelectedValue1] = useState(maintenance.userId);
+  const handleSelectChange1 = (event) => {
+    setSelectedValue1(event.target.value);
+    handleInputChange(event, 'maintenance', dispatch);
+  };
+
+  const [selectedValue2, setSelectedValue2] = useState(maintenance.categoryId);
+  const handleSelectChange2 = (event) => {
+    setSelectedValue2(event.target.value);
+    handleInputChange(event, 'maintenance', dispatch);
+  };
+
+  const fetch1 = handleAction(5, { value: "fetch" }, dispatch);
+  const fetch2 = handleAction(1, { value: 'fetch' }, dispatch);
+  const categories = useSelector((state) => state.category.categoriesArray);
+  const users = useSelector((state) => state.user.usersArray);
+  useEffect(() => {
+    dispatch(fetch1());
+    dispatch(fetch2());
+  }, [dispatch]);
+
+
 
   const handleChange = (e) => {
     handleInputChange(e, "maintenance", dispatch);
   };
 
   const handleAdd = () => {
-    handleAction(4, { value: 'add', document: maintenance, actual: actual, navigate }, dispatch);
+    handleAction(
+      4,
+      { value: "add", document: maintenance, actual: actual, navigate },
+      dispatch
+    );
   };
 
   return (
     <>
-     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6" sx={{ fontWeight: 600 }}>
           {actual === "" ? "Add" : "Update"} maintenance
         </Typography>
@@ -36,52 +65,43 @@ const { values, actual, valids } = useSelector(state => state.form);
           Regresar
         </Button>
       </Box>
-      <TextField
-         key="idMaintenance"
-         name="idMaintenance"
-         type="number"
-         placeholder="ID"
-          value={maintenance.idMaintenance}
+      {/* <TextField
+        key="userId"
+        name="userId"
+        type="number"
+        placeholder="User ID"
+        value={maintenance.userId}
         onChange={handleChange}
-         error={!valid.idMaintenance}
-         helperText={!valid.idMaintenance && "Use only numbers"}
-         required
-      />
-      <TextField
-        key="maintenance"
-        name="maintenance"
-        type="text"
-        placeholder="Maintenance"
-         value={maintenance.maintenance}
-        onChange={handleChange}
-        error={!valid.maintenance}
-        helperText={!valid.maintenance && 
-          "Maintenance should be 3-16 characters and shouldn't include any special character!"}
+        error={!valid.userId}
+        helperText={!valid.userId && "Use only numbers"}
         required
+      /> */}
+      <CustomSelect
+        data={users}
+        label="user"
+        target={["userId", "name"]}
+        value={selectedValue1}
+        onChange={handleSelectChange1}
       />
-      <TextField
-        key="abilityId"
-        name="abilityId"
+      {/* <TextField
+        key="categoryId"
+        name="categoryId"
         type="number"
         placeholder="Ability ID"
-         value={maintenance.abilityId}
+         value={maintenance.categoryId}
         onChange={handleChange}
-        error={!valid.abilityId}
-        helperText={!valid.abilityId && "Use only numbers"}
+        error={!valid.categoryId}
+        helperText={!valid.categoryId && "Use only numbers"}
         required
+      /> */}
+      <CustomSelect
+        data={categories}
+        label="category"
+        target={["categoryId", "value"]}
+        value={selectedValue2}
+        onChange={handleSelectChange2}
       />
-      <TextField
-        key="ability"
-        name="ability"
-        type="text"
-        placeholder="Ability"
-        value={maintenance.ability}
-        onChange={handleChange}
-        error={!valid.ability}
-        helperText={!valid.ability && "Write the Ability needed without special characters"}
-        required
-      />
-    <Button variant="contained" size="large" onClick={handleAdd}>
+      <Button variant="contained" size="large" onClick={handleAdd}>
         {actual === "" ? "Add" : "Update"} Maintenance
       </Button>
     </>

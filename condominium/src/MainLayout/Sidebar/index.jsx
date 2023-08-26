@@ -9,7 +9,6 @@ import CategoryIcon from "@mui/icons-material/Category";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle } from "../../app/drawerSlice";
 import NavItem from "./NavItem";
-//import { Logout } from "./Logout";
 
 const Sidebar = () => {
   const drawerOpened = useSelector((state) => state.drawer.opened);
@@ -38,14 +37,23 @@ const Sidebar = () => {
         {role === "Admin" ? (
           linksArray.map((item) => <NavItem key={item.label} item={item} />)
         ) : (
+          <>
           <NavItem
             key="myTickets"
             item={{
-              label: "MyTickets",
+              label: "My Tickets",
               icon: <GroupIcon />,
               path: "/MyTickets",
             }}
           />
+          <NavItem
+            key="newTicket"
+            item={{
+              label: "New Tickets",
+              icon: <GroupIcon />,
+              path: "/Tickets/CU",
+            }}
+          /></>
         )}
       </List>
       {/* <Logout /> */}
@@ -93,14 +101,14 @@ const linksArray = [
     path: "/Tickets",
   },
   {
-    label: "Maintenance",
+    label: "Maintenances",
     icon: <ConstructionIcon />,
-    path: "/Maintenance",
+    path: "/Maintenances",
   },
   {
     label: "Categories",
     icon: <CategoryIcon />,
-    path: "/Categories",
+    path: "/Categorys",
   },
 ];
 

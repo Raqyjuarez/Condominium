@@ -8,7 +8,7 @@ import { handleAction } from "../Tables/HelperFunctions";
 
 const CategoriesForm = () => {
   const { values, actual, valids } = useSelector(state => state.form);
-  const user = values.category;
+  const category = values.category;
   const valid = valids.category;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,6 +23,19 @@ const CategoriesForm = () => {
 
   return (
     <>
+    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          {actual === "" ? "Add" : "Update"} category
+        </Typography>
+        <Button
+          variant="outlined"
+          component={NavLink}
+          to="/Categories"
+          onClick={() => dispatch(clean())}
+        >
+          Regresar
+        </Button>
+      </Box>
       <TextField
         key="value"
         name="value"

@@ -9,16 +9,6 @@ import {
 } from "firebase/firestore";
 import db from "../config/firebase";
 
-const maintenance = {
-  userId: "",
-  categoryId: "",
-};
-
-const valid = {
-  userId: true,
-  categoryId: true,
-};
-
 export const addMaintenance = createAsyncThunk(
   "maintenances/addMaintenance",
   async (maintenance) => {
@@ -39,7 +29,6 @@ export const fetchMaintenances = createAsyncThunk(
       id: doc.id,
       maintenance: doc.data(),
     }));
-    console.log(maintenances);
     return maintenances;
   }
 );
@@ -73,23 +62,12 @@ export const updateMaintenance = createAsyncThunk(
 
 const maintenancesSlice = createSlice({
   name: "Maintenances",
-  initialState: {
-    actual: "",
-    maintenance,
-    valid,
-    maintenancesArray: [],
-  },
-  reducers: {
-    setValidations: (state, action) => {
-      const { name, value } = action.payload;
-      state.maintenance[name] = value;
-    },
-  },
+  initialState: { maintenancesArray: [] },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addMaintenance.fulfilled, (state, action) => {
         state.maintenancesArray.push(action.payload);
-        state.actual = "";
       })
       .addCase(fetchMaintenances.fulfilled, (state, action) => {
         state.maintenancesArray = action.payload;

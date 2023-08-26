@@ -9,20 +9,6 @@ import {
 } from "firebase/firestore";
 import db from "../config/firebase";
 
-const residential = {
-  ownerId: "",
-  residentId: "",
-  address: "",
-  residentialPhone: "",
-};
-
-const valid = {
-  ownerId: true,
-  residentId: true,
-  address: true,
-  residentialPhone: true,
-};
-
 export const addResidential = createAsyncThunk(
   "residentials/addResidential",
   async (residential) => {
@@ -76,34 +62,14 @@ export const updateResidential = createAsyncThunk(
 
 const residentialsSlice = createSlice({
   name: "Residentials",
-  initialState: {
-    actual: "",
-    residential,
-    valid,
-    residentialsArray: [],
-  },
-  reducers: {
-    setValues: (state, action) => {
-      const { name, value } = action.payload;
-      state.residential[name] = value;
-    },
-    setValidations: (state, action) => {
-      const { name, value } = action.payload;
-      state.residential[name] = value;
-    },
-    setResidential: (state, action) => {
-      state.residential = action.payload.residential;
-      state.actual = action.payload.id;
-    },
-  },
+  initialState: { residentialsArray: [] },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addResidential.fulfilled, (state, action) => {
         state.residentialsArray.push(action.payload);
-        state.actual = "";
       })
       .addCase(fetchResidentials.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.residentialsArray = action.payload;
       })
       .addCase(deleteResidential.fulfilled, (state, action) => {

@@ -9,26 +9,6 @@ import {
 } from "firebase/firestore";
 import db from "../config/firebase";
 
-const user = {
-  username: '',
-  password: '',
-  name: "",
-  lastname: "",
-  email: "",
-  userPhone: "",
-  userRole: "",
-};
-
-const valid = {
-  username: true,
-  password: true,
-  name: true,
-  lastname: true,
-  email: true,
-  userPhone: true,
-  userRole: true,
-};
-
 export const addUser = createAsyncThunk("users/addUser", async (user) => {
   const addUserRef = await addDoc(collection(db, "Users"), user);
   const newUser = { id: addUserRef.id, user };
@@ -57,7 +37,6 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id) => {
 export const updateUser = createAsyncThunk(
   "users/updateUser",
   async (editedUser) => {
-    console.log(editedUser)
     const users = await getDocs(collection(db, "Users"));
     for (var snap of users.docs) {
       if (snap.id === editedUser.id) {
@@ -71,18 +50,8 @@ export const updateUser = createAsyncThunk(
 
 const usersSlice = createSlice({
   name: "Users",
-  initialState: {
-    actual: "",
-    user,
-    valid,
-    usersArray: [],
-  },
-  reducers: {
-    setValidations: (state, action) => {
-      const { name, value } = action.payload;
-      state.user[name] = value;
-    },
-  },
+  initialState: {usersArray: [] },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addUser.fulfilled, (state, action) => {
