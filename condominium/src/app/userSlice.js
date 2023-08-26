@@ -53,6 +53,7 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id) => {
 export const updateUser = createAsyncThunk(
   "users/updateUser",
   async (editedUser) => {
+    console.log(editedUser)
     const users = await getDocs(collection(db, "Users"));
     for (var snap of users.docs) {
       if (snap.id === editedUser.id) {

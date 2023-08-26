@@ -274,7 +274,6 @@ const EnhancedTable = ({ options, tableCells, setOpen }) => {
     if (newSelected.length === 1) {
       handleAction(1, { value: "set", document: newSelected[0] }, dispatch);
     } else dispatch(clean());
-    console.log(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {

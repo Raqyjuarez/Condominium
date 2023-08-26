@@ -94,7 +94,7 @@ const handleAdd = async (func, document, name, actual, navigate, dispatch) => {
       await dispatch(clean());
       navigate(`/${name}s`);
     } else {
-      await dispatch(func.update({ id: actual, name: document }));
+      await dispatch(func.update({ id: actual, [name]: document }));
       await dispatch(clean());
       navigate(`/${name}s`);
     }
